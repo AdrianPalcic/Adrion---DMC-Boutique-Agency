@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cormorantGaramond, ovo } from "./fonts.js";
+import { cormorantGaramond, ovo, pinyon } from "./fonts.js";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning
-        className={`${cormorantGaramond.variable} ${ovo.variable} antialiased`}
+        className={`${cormorantGaramond.variable} ${ovo.variable} ${pinyon.variable} antialiased`}
       >
         {children}
       </body>

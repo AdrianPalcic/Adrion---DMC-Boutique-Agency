@@ -46,3 +46,14 @@ export const ovo = localFont({
   ],
   variable: "--font-ovo",
 });
+
+export const pinyon = localFont({
+  src: [
+    {
+      path: "../public/fonts/PinyonScript-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-pinyon",
+});
