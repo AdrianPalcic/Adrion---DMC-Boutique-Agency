@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  --font-cormorant: var(--font-cormorant);
+  --font-ovo: var(--font-ovo);
+}
