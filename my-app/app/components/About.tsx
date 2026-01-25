@@ -7,7 +7,7 @@ const About = () => {
       <div className="flex h-full">
         <div className="flex-1 flex flex-col justify-center items-center  h-full">
           <div>
-            <p className="paragraph-one max-w-xl ">
+            <p className="paragraph-one max-w-xl text-(--deep-blue)">
               At Adrion, we believe travel should have purpose, not volume.
               Every journey is meticulously designed, combining the rich
               landscapes of Croatia—from the Biokovo mountains, the Cetina

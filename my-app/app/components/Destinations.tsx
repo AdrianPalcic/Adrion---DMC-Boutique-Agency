@@ -70,7 +70,7 @@ const Destinations = () => {
               className="object-cover w-100 h-125 "
             />
 
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20  ">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 group hover:bg-black/70 transition-colors duration-300">
               <h2 className="text-white text-center text-9xl font-cormorant font-medium italic tracking-wider drop-shadow-lg ">
                 {currentDestination.name}
               </h2>
@@ -79,7 +79,7 @@ const Destinations = () => {
                 {currentDestination.description}
               </p>
 
-              <p className="text-white/80 text-xs uppercase tracking-[0.3em] mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+              <p className="text-(--yellow) font-bold inner-links uppercase tracking-[0.2em] mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 Explore Destination
               </p>
             </div>
