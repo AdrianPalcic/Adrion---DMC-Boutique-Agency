@@ -11,7 +11,7 @@ const Hero = () => {
     <>
       <Preloader isReady={isFirstImageLoaded} />
 
-      <section className="relative w-full h-screen overflow-hidden bg-black">
+      <section className="relative w-full h-dvh overflow-hidden bg-black">
         <Image
           src="/images/hero.webp"
           alt="Boutique Agency Experience"

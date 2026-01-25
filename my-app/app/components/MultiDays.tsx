@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const MultiDays = () => {
   return (
-    <main className="min-h-screen w-full overflow-hidden flex flex-col">
+    <section className="min-h-dvh w-full overflow-hidden flex flex-col">
       {/* Container koji omogućuje horizontalni scroll na desktopu */}
       <div className="flex w-full h-full flex-col md:flex-row flex-1 overflow-x-auto no-scrollbar snap-x snap-mandatory">
         {multidays.map((d) => (
@@ -55,7 +55,7 @@ const MultiDays = () => {
           </div>
         </button>
       </div>
-    </main>
+    </section>
   );
 };
 

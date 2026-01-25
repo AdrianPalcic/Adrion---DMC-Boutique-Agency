@@ -2,7 +2,7 @@ import React from "react";
 
 const CTA = () => {
   return (
-    <main className="w-full h-screen">
+    <main className="w-full h-dvh">
       <div className="flex flex-col items-center justify-center w-full h-full">
         <h1 className="text-(--deep-blue) mb-3 text-center text-5xl md:text-6xl font-cormorant leading-wide uppercase max-w-3xl italic">
           For those who seek adventure & emotion

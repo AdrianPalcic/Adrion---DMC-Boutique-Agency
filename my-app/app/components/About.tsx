@@ -3,7 +3,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <main className="w-full h-350 md:h-300 lg:h-screen overflow-y-visible lg:overflow-y-hidden">
+    <section className="w-full h-350 md:h-300 lg:h-dvh overflow-y-visible lg:overflow-y-hidden">
       <div className="flex gap-5 flex-col-reverse lg:flex-row h-full">
         <div className="flex-1 flex flex-col justify-center items-center  h-full py-3 px-2">
           <div className="">
@@ -42,7 +42,7 @@ const About = () => {
           />
         </div>
       </div>
-    </main>
+    </section>
   );
 };
 

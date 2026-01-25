@@ -38,7 +38,7 @@ const Destinations = () => {
 
   return (
     <>
-      <main className="w-full h-screen relative overflow-hidden">
+      <section className="w-full h-dvh relative overflow-hidden">
         {/* BACKGROUND IMAGE - S FADE EFEKTOM */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -134,7 +134,7 @@ const Destinations = () => {
             </div>
           </div>
         </div>
-      </main>
+      </section>
     </>
   );
 };
