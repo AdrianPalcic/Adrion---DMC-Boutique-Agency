@@ -62,7 +62,7 @@ export const multidays = [
     destination: "Slavonija",
     image: "/images/multidays-slavonija.webp",
     description:
-      "Discover the silent luxury of endless plains, centuries-old wine cellars, and noble estates.",
+      "Discover the silent luxury of endless plains, centuries-old wine cellars and noble estates.",
     route: "Osijek • Baranja • Ilok • Đakovo",
   },
   {
