@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { cormorantGaramond, ovo, pinyon } from "./fonts.js";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 
 export const metadata: Metadata = {
   title: "Adrion - DMC Boutique agency",
@@ -18,6 +19,8 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${cormorantGaramond.variable} ${ovo.variable} ${pinyon.variable} antialiased`}
       >
+        <Navbar />
+
         {children}
       </body>
     </html>

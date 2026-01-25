@@ -14,22 +14,21 @@ const Hero = () => {
         // placeholder="blur" // Ako imaš generiran blurDataURL, ovo je vrhunski
       />
 
-      <div className="absolute inset-0 bg-black/20" />
+      <div className="absolute inset-0 bg-black/50" />
 
       {/* CONTENT */}
       <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-6">
         <h1 className="main-title text-white max-w-5xl leading-[1.1]">
-          Adrion Luxury <br />
-          <span className="italic">Experience</span>
+          Curated Croatian <br />
+          <span className="italic">Journeys</span>
         </h1>
 
-        <p className="paragraph-one text-white/90 mt-6 max-w-2xl">
-          Elegance redefined through boutique travel management. Tailored
-          journeys for the most discerning travelers.
+        <p className="main-subtitle text-white/90 mt-6 max-w-2xl">
+          For those who appreciate quality, balance and authentic experiences
         </p>
 
         <button className="inner-links mt-10 text-white uppercase tracking-[0.2em] text-sm">
-          Discover more
+          Start your adventure
         </button>
       </div>
     </section>

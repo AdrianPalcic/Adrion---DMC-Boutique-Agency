@@ -16,9 +16,28 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--shore);
+    overflow-x: hidden;
+  }
   body {
     background-color: var(--shore);
+    max-width: 1800px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
+    overflow-x: hidden;
   }
+}
+.main-subtitle {
+  letter-spacing: 0.01em;
+  font-family: var(--font-pinyon);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  font-size: 32px;
+  font-weight: 400;
 }
 
 @layer utilities {
@@ -38,12 +57,22 @@
     text-transform: uppercase;
     @apply text-[70px];
   }
+
   .paragraph-one {
     font-size: 20px;
     font-family: var(--font-ovo);
     font-weight: 400;
-    line-height: 140%;
+    line-height: 2;
     letter-spacing: 0.01em;
+    clear: both;
+  }
+  .paragraph-one::first-letter {
+    -webkit-initial-letter: 2;
+    initial-letter: 2;
+    font-family: var(--font-pinyon);
+    color: var(--green);
+    margin-right: 0.2em;
+    margin-top: -2em;
   }
   .paragraph-two {
     font-size: 18px;
@@ -81,64 +110,4 @@
     transform: scaleX(1);
     transform-origin: bottom left;
   }
-
-  .elegant-subtitle {
-    @apply text-[30px] font-pinyon;
-  }
-  .logo-wrapper {
-    @apply my-4 mx-2;
-
-    .logo-container {
-      @apply flex gap-2 items-center w-fit;
-
-      .logo-icon {
-        @apply w-16 h-15;
-
-        .logo-img {
-          @apply w-full h-full object-cover;
-        }
-      }
-
-      .logo-text-container {
-        @apply flex flex-col items-center-safe font-cormorant uppercase;
-
-        .logo-title {
-          @apply text-2xl font-bold;
-        }
-
-        .logo-subtitle {
-          @apply text-[16px] font-medium;
-        }
-      }
-    }
-
-    .nav-glass {
-      @apply fixed top-0 left-0 w-full z-50 transition-all duration-500;
-
-      /* Stil kad NIJE skrolano */
-      @apply bg-transparent py-8;
-
-      /* Stil kad JE skrolano */
-      &.scrolled {
-        @apply bg-white/80 backdrop-blur-lg py-4 shadow-sm border-b border-gray-100;
-
-        .logo-text {
-          @apply scale-90; /* Smanji logo malo kad se skrola */
-        }
-      }
-    }
-  }
-  /* .inner-links {
-    font-family: var(--font-cormorant);
-    font-weight: 800;
-    font-size: 18px;
-    letter-spacing: 0em;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0.8;
-  }
-
-  .inner-links:hover {
-    letter-spacing: 0.15em; /* Lagano širenje slova */
-  /* opacity: 1;
-  } */
 }
