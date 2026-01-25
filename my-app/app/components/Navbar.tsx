@@ -18,18 +18,18 @@ const Navbar = () => {
       {/* STATUS PORUKA - UNDER DEVELOPMENT */}
       <div className="flex items-center gap-4">
         {/* Vizualni indikator rada */}
-        <div className="hidden md:flex items-center gap-2 px-4 py-1.5 border border-(--yellow)/30 rounded-full">
+        <div className="flex items-center gap-2 px-4 py-1.5 border border-(--yellow)/30 rounded-full">
           <span className="relative flex h-1.5 w-1.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-(--yellow) opacity-75"></span>
             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-(--yellow)"></span>
           </span>
-          <span className="text-(--yellow) text-[9px] uppercase tracking-[0.2em] font-medium">
+          <span className="text-(--yellow) text-[5px] md:text-[9px] uppercase tracking-[0.2em] font-medium">
             Project under development
           </span>
         </div>
 
         {/* Hamburger ili Menu placeholder (za vizualni balans) */}
-        <div className="flex flex-col gap-1.5 cursor-not-allowed opacity-40">
+        <div className="hidden md:flex flex-col gap-1.5 cursor-not-allowed opacity-40">
           <div className="w-8 h-px bg-white"></div>
           <div className="w-5 h-px bg-white self-end"></div>
         </div>
