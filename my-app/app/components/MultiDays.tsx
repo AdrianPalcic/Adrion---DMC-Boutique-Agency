@@ -47,7 +47,7 @@ const MultiDays = () => {
 
       <div className="py-10 flex justify-center ">
         <button className="group flex flex-col items-center gap-2 cursor-pointer">
-          <span className="text-(--green) uppercase tracking-[0.3em] font-bold  font-cormorant">
+          <span className="text-(--green) uppercase tracking-[0.3em] font-bold  font-cormorant text-sm sm:text-[16px]">
             Discover All Experiences
           </span>
           <div className="w-24 h-px bg-(--green)/20 relative overflow-hidden">

@@ -85,7 +85,7 @@ const Destinations = () => {
               </p>
 
               <button className="group flex flex-col items-center gap-2 cursor-pointer mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                <span className="text-(--yellow) uppercase tracking-[0.3em] font-bold font-cormorant opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                <span className="text-(--yellow) uppercase tracking-[0.3em] font-bold font-cormorant opacity-80 group-hover:opacity-100 transition-opacity duration-500 text-sm sm:text-[16px]">
                   Explore Destination
                 </span>
                 <div className="w-24 h-px bg-(--yellow)/20 relative overflow-hidden">

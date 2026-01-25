@@ -84,7 +84,7 @@ const DayTrips = () => {
       {/* Donji gumb u tvom stilu */}
       <div className="mt-20 flex justify-center">
         <button className="group flex flex-col items-center gap-2 cursor-pointer">
-          <span className="text-(--green) uppercase tracking-[0.3em] font-bold  font-cormorant">
+          <span className="text-(--green) uppercase tracking-[0.3em] font-bold  font-cormorant text-sm sm:text-[16px]">
             View All Day Trips
           </span>
           <div className="w-24 h-px bg-(--green)/20 relative overflow-hidden">
