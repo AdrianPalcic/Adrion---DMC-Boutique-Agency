@@ -111,3 +111,19 @@
     transform-origin: bottom left;
   }
 }
+
+/* Definiramo animaciju */
+@keyframes backgroundFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.05); /* Lagani zoom efekt za dodatni luksuz */
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/*  */
+.bg-image-fade {
+  animation: backgroundFadeIn 1.2s ease-out forwards;
+}

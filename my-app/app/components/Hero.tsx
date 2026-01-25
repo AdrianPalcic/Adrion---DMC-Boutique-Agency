@@ -27,8 +27,13 @@ const Hero = () => {
           For those who appreciate quality, balance and authentic experiences
         </p>
 
-        <button className="inner-links mt-10 text-white uppercase tracking-[0.2em] text-sm">
-          Start your adventure
+        <button className="group flex flex-col items-center gap-2 cursor-pointer mt-12">
+          <span className="text-white uppercase tracking-[0.3em] font-bold  font-cormorant">
+            Start Your Adventure
+          </span>
+          <div className="w-24 h-px bg-white/20 relative overflow-hidden">
+            <div className="absolute inset-0 bg-white translate-x-full group-hover:translate-x-[0%] transition-transform duration-500" />
+          </div>
         </button>
       </div>
     </section>

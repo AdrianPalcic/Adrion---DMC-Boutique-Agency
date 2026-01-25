@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { cormorantGaramond, ovo, pinyon } from "./fonts.js";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Adrion - DMC Boutique agency",
@@ -22,6 +23,8 @@ export default function RootLayout({
         <Navbar />
 
         {children}
+
+        <Footer />
       </body>
     </html>
   );

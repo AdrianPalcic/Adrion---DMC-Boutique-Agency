@@ -37,15 +37,18 @@ const Destinations = () => {
 
   return (
     <main className="w-full h-screen relative overflow-hidden">
-      {/* BACKGROUND IMAGE */}
-      <Image
-        src={currentDestination.backgroundImage}
-        sizes="100vw"
-        alt="Adrion travel agency destinations"
-        fill
-        priority
-        className="object-cover object-center z-0"
-      />
+      {/* BACKGROUND IMAGE - S FADE EFEKTOM */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          key={currentDestination.backgroundImage} // Ključno: React re-renderira sliku pri promjeni
+          src={currentDestination.backgroundImage}
+          sizes="100vw"
+          alt="Adrion travel agency destinations"
+          fill
+          priority
+          className="object-cover object-center bg-image-fade transition-opacity duration-1000"
+        />
+      </div>
 
       <div className="absolute inset-0 bg-black/50 z-10"></div>
 
@@ -79,9 +82,15 @@ const Destinations = () => {
                 {currentDestination.description}
               </p>
 
-              <p className="text-(--yellow) font-bold inner-links uppercase tracking-[0.2em] mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Explore Destination
-              </p>
+              <button className="group flex flex-col items-center gap-2 cursor-pointer mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
+                <span className="text-(--yellow) uppercase tracking-[0.3em] font-bold font-cormorant opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                  Explore Destination
+                </span>
+                <div className="w-24 h-px bg-(--yellow)/20 relative overflow-hidden">
+                  {/* Linija kreće izvan okvira i ulazi unutra na hover */}
+                  <div className="absolute inset-0 bg-(--yellow) -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
+                </div>
+              </button>
             </div>
           </div>
         </div>
