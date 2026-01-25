@@ -4,10 +4,11 @@ const CTA = () => {
   return (
     <main className="w-full h-screen">
       <div className="flex flex-col items-center justify-center w-full h-full">
-        <h1 className="main-title text-(--deep-blue) text-center max-w-3xl">
+        <h1 className="text-(--deep-blue) mb-3 text-center text-5xl md:text-6xl font-cormorant leading-tight">
           For those who seek adventure & emotion
         </h1>
-        <h2 className="text-lg text-(--deep-blue) text-center max-w-2xl">
+
+        <h2 className="text-[16px] md:text-lg text-(--deep-blue) text-center max-w-2xl font-ovo">
           Our journeys are built on selection, responsibility, and trust —
           shaped to support local communities, highlight lesser-known places,
           and present Croatia as it truly is, in every season. Nothing is

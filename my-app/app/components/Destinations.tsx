@@ -57,8 +57,8 @@ const Destinations = () => {
         id="content"
         className="z-20 w-full h-full relative flex flex-col items-center"
       >
-        <div className="my-6">
-          <h1 className="font-pinyon text-6xl text-white text-center">
+        <div className="my-6 mx-1">
+          <h1 className="font-pinyon  text-3xl lg:text-6xl text-white text-center">
             Where our journeys take place
           </h1>
         </div>
@@ -67,14 +67,16 @@ const Destinations = () => {
           <div className="relative group shadow-2xl">
             <Image
               src={currentDestination.frontImage}
-              width={400}
+              width={400} // Rezervira prostor za veći ekran
               height={500}
               alt={currentDestination.name}
-              className="object-cover w-100 h-125 "
+              // Ispod 'sm' (mobitel) je w-[300px] h-[400px]
+              // Od 'sm' pa na gore (desktop) je w-[400px] h-[500px]
+              className="object-cover w-[300px] h-[400px] sm:w-[400px] sm:h-[500px] transition-all duration-500"
             />
 
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 group hover:bg-black/70 transition-colors duration-300">
-              <h2 className="text-white text-center text-9xl font-cormorant font-medium italic tracking-wider drop-shadow-lg ">
+              <h2 className="text-white text-center text-6xl lg:text-9xl font-cormorant font-medium italic tracking-wider drop-shadow-lg ">
                 {currentDestination.name}
               </h2>
 
