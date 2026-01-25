@@ -63,14 +63,7 @@
     letter-spacing: 0.01em;
     clear: both;
   }
-  .paragraph-one::first-letter {
-    -webkit-initial-letter: 2;
-    initial-letter: 2;
-    font-family: var(--font-pinyon);
-    color: var(--green);
-    margin-right: 0.2em;
-    margin-top: -2em;
-  }
+
   .paragraph-two {
     font-size: 18px;
     font-family: var(--font-ovo);
