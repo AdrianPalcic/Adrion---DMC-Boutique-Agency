@@ -49,6 +49,7 @@ const Destinations = () => {
             fill
             quality={75}
             priority
+            className="object-cover object-center bg-image-fade transition-opacity duration-1000"
           />
         </div>
 
@@ -72,8 +73,6 @@ const Destinations = () => {
                 width={400} // Rezervira prostor za veći ekran
                 height={500}
                 alt={currentDestination.name}
-                // Ispod 'sm' (mobitel) je w-[300px] h-[400px]
-                // Od 'sm' pa na gore (desktop) je w-[400px] h-[500px]
                 className="object-cover w-[300px] h-[400px] sm:w-[400px] sm:h-[500px] transition-all duration-500"
               />
 
