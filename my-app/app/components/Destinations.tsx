@@ -108,7 +108,9 @@ const Destinations = () => {
                 className={`object-cover w-[300px] h-[400px] sm:w-[400px] sm:h-[500px] transition-all duration-700 ${isChanging ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
               />
 
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 group">
+              <div
+                className={`absolute inset-0 flex flex-col items-center justify-center   group ${isFrontLoaded ? "bg-black/40" : ""}`}
+              >
                 <h2 className="text-white text-center text-6xl lg:text-9xl font-cormorant font-medium italic tracking-wider drop-shadow-lg">
                   {currentDestination.name}
                 </h2>
