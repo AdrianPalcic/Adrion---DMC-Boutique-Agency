@@ -11,7 +11,7 @@ const Navbar = () => {
           Adrion
         </span>
         <span className="text-white/40 text-[8px] uppercase tracking-[0.4em] mt-1 ml-0.5">
-          Travel Agency
+          Custom Travel Agency
         </span>
       </div>
 

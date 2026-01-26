@@ -11,7 +11,7 @@ const Footer = () => {
         {/* Lijeva strana - Copyright & Status */}
         <div className="flex flex-col items-center md:items-start gap-2">
           <p className="text-black/30 text-[10px] uppercase tracking-[0.3em]">
-            © {currentYear} Adrion Travel Agency
+            © {currentYear} Adrion Custom Travel Agency
           </p>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">

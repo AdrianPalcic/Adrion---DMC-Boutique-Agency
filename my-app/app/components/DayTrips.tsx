@@ -2,30 +2,36 @@
 
 import Image from "next/image";
 
-const dayTrips = [
+export const dayTrips = [
   {
     id: 1,
-    title: "Blue Cave & Hvar Archipelago",
+    title: "Cetina Biking Odyssey",
     category: "Island Hopping",
-    image: "/images/island.webp",
-    duration: "10 Hours",
+    image: "/images/biking.webp",
+    duration: "4 Hours",
     price: "From €120",
+    description:
+      "Pedal through ancient olive groves and hidden coastal trails of central Dalmatian islands.",
   },
   {
     id: 2,
-    title: "Plitvice Lakes National Park",
+    title: "Plitvice Lakes: The Emerald Path",
     category: "Nature & Hiking",
     image: "/images/plitvice.webp",
     duration: "8 Hours",
-    price: "From €90",
+    price: "From €95",
+    description:
+      "A private, curated tour through Croatia’s most iconic cascades and forest reserves.",
   },
   {
     id: 3,
-    title: "Istrian Truffle Hunting",
-    category: "Gourmet Experience",
-    image: "/images/daytrips-istra.webp",
+    title: "Cetina River Rafting & Riverside Dining",
+    category: "Adventure & Gourmet",
+    image: "/images/rafting.webp",
     duration: "6 Hours",
     price: "From €150",
+    description:
+      "Adrenaline on the rapids followed by a slow-food experience in a traditional canyon mill.",
   },
 ];
 
