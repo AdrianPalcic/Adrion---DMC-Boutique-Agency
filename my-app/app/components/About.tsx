@@ -34,19 +34,22 @@ const About = () => {
               {restOfText}
             </p>
 
-            <button className="group flex flex-col items-start gap-2 cursor-pointer mt-12">
+            <a
+              href="/under-development"
+              className="group flex flex-col items-start gap-2 cursor-pointer mt-12"
+            >
               <span className="text-(--green) uppercase tracking-[0.3em] font-bold font-cormorant text-sm sm:text-[16px]">
                 Our Philosophy
               </span>
               <div className="w-24 h-px bg-(--green)/20 relative overflow-hidden">
                 <div className="absolute inset-0 bg-(--green) -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
               </div>
-            </button>
+            </a>
           </div>
         </div>
 
         {/* IMAGE */}
-        <div className="flex-1 min-h-[400px] lg:h-full w-full relative">
+        <div className="flex-1 min-h-100 lg:h-full w-full relative">
           <Image
             src="/images/about.webp"
             alt="About Adrion Custom Travel agency"

@@ -4,7 +4,10 @@ import React from "react";
 
 const ContactForm = () => {
   return (
-    <section className="w-full py-24 bg-(--green) px-6 md:px-12 border-t border-white/5">
+    <section
+      id="contact"
+      className="w-full py-24 bg-(--green) px-6 md:px-12 border-t border-white/5"
+    >
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
         {/* Lijeva strana: Tekstualni poziv */}
         <div className="flex flex-col justify-center">

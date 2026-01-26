@@ -29,7 +29,7 @@ const Navbar = () => {
         </div>
 
         {/* Hamburger ili Menu placeholder (za vizualni balans) */}
-        <div className="hidden md:flex flex-col gap-1.5 cursor-not-allowed opacity-40">
+        <div className="hidden  gap-1.5 cursor-not-allowed opacity-40">
           <div className="w-8 h-px bg-white"></div>
           <div className="w-5 h-px bg-white self-end"></div>
         </div>

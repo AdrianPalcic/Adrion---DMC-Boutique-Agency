@@ -1,16 +1,8 @@
-"use client";
-
 import Image from "next/image";
-import Preloader from "./Preloader";
-import { useState } from "react";
 
 const Hero = () => {
-  const [isFirstImageLoaded, setIsFirstImageLoaded] = useState(false);
-
   return (
     <>
-      <Preloader isReady={isFirstImageLoaded} />
-
       <section className="relative w-full h-dvh overflow-hidden bg-black">
         <Image
           src="/images/hero.webp"
@@ -20,7 +12,6 @@ const Hero = () => {
           quality={100}
           sizes="100vw"
           className="object-cover object-center pointer-events-none hero-image-sharp"
-          onLoad={() => setIsFirstImageLoaded(true)}
           // placeholder="blur" // Ako imaš generiran blurDataURL, ovo je vrhunski
         />
 
@@ -37,14 +28,17 @@ const Hero = () => {
             For those who appreciate quality, balance and authentic experiences
           </p>
 
-          <button className="group flex flex-col items-center gap-2 cursor-pointer mt-12">
+          <a
+            href="/under-development"
+            className="group flex flex-col items-center gap-2 cursor-pointer mt-12"
+          >
             <span className="text-white uppercase tracking-[0.3em] font-bold  font-cormorant text-sm sm:text-[16px]">
               Start Your Adventure
             </span>
             <div className="w-24 h-px bg-white/20 relative overflow-hidden">
               <div className="absolute inset-0 bg-white translate-x-full group-hover:translate-x-[0%] transition-transform duration-500" />
             </div>
-          </button>
+          </a>
         </div>
       </section>
     </>
