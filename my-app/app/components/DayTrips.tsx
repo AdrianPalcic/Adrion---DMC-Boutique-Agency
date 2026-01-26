@@ -17,7 +17,7 @@ export const dayTrips = [
     id: 2,
     title: "Plitvice Lakes: The Emerald Path",
     category: "Nature & Hiking",
-    image: "/images/plitvice-slapovi.webp",
+    image: "/images/plitvice-slapovi-next.webp",
     duration: "8 Hours",
     price: "From €95",
     description:
@@ -27,7 +27,7 @@ export const dayTrips = [
     id: 3,
     title: "Istrian Truffle Hunt & Medieval Hilltops",
     category: "Heritage & Gourmet",
-    image: "/images/istra.webp",
+    image: "/images/istra-back.webp",
     duration: "6 Hours",
     price: "From €150",
     description:
