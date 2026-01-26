@@ -19,10 +19,10 @@ const Page = () => {
           />
         </div>
 
-        <p className="mt-6 text-white/60  uppercase tracking-[0.5em] font-light">
+        <p className="mt-6 text-white/60 text-center  uppercase tracking-[0.5em] font-light">
           Currently under development
         </p>
-        <p className="mt-6 text-white/60 text-sm uppercase tracking-[0.2em] font-light">
+        <p className="mt-6 text-white/60 text-center text-sm uppercase tracking-[0.2em] font-light">
           Stay Tuned for the Adrion experience!
         </p>
         <a
