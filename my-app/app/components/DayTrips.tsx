@@ -25,13 +25,13 @@ export const dayTrips = [
   },
   {
     id: 3,
-    title: "Cetina River Rafting & Riverside Dining",
-    category: "Adventure & Gourmet",
+    title: "Istrian Truffle Hunt & Medieval Hilltops",
+    category: "Heritage & Gourmet",
     image: "/images/istra.webp",
     duration: "6 Hours",
     price: "From €150",
     description:
-      "Adrenaline on the rapids followed by a slow-food experience in a traditional canyon mill.",
+      "An exclusive deep-dive into Motovun forests with professional hunters, followed by a private tasting in a family-owned estate.",
   },
 ];
 
