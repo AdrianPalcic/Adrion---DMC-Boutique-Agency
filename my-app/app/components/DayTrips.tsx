@@ -5,7 +5,7 @@ import Image from "next/image";
 export const dayTrips = [
   {
     id: 1,
-    title: "Cetina River Ride",
+    title: "Cetina Canyon Bike Adventure",
     category: "Biking",
     image: "/images/bike.webp",
     duration: "4 Hours",
