@@ -4,21 +4,21 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-5 md:px-12 flex justify-between items-center backdrop-blur-sm bg-black/10 border-b border-white/5">
+    <nav className="absolute top-0 left-0 w-full z-[100] px-6 py-5 md:px-12 flex justify-between items-center ">
       {/* LOGO DIO */}
-      <div className="flex flex-col sm:flex-row items-center sm:items-end gap-0">
+      <div className="flex flex-col  items-center gap-0">
         <div className="w-[60px] sm:w-fit">
           <img
             src="/images/logo-white-try.png"
             alt="Logo Adrion"
-            className="w-[50px] sm:w-[60px] object-cover"
+            className="w-[60px] sm:w-[70px] object-cover"
           />
         </div>
-        <div className="flex flex-col sm:flex-row">
-          <span className="text-white text-[10px] text-center sm:text-[12px] md:text-[20px] uppercase tracking-[0.2em] mt-1 ml-0.5 font-cormorant">
+        <div className="flex flex-col  gap-0 ">
+          <span className="text-white text-[10px] text-center sm:text-[12px] md:text-[18px] uppercase tracking-[0.2em] mt-1 ml-0.5 font-cormorant">
             Adrion Custom
           </span>
-          <span className="text-white text-[8px] text-center sm:text-[12px] md:text-[20px] uppercase tracking-[0.2em] mt-1 ml-0.5 font-cormorant">
+          <span className="text-white text-[8px] text-center sm:text-[12px] md:text-[15px] uppercase tracking-[0.2em] mt-1 ml-0.5 font-cormorant">
             Travel Agency
           </span>
         </div>

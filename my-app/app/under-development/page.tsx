@@ -8,7 +8,7 @@ const Page = () => {
     >
       <div className="flex flex-col items-center">
         {/* Logo animacija */}
-        <h1 className="text-white font-pinyon text-6xl md:text-8xl mb-4 ">
+        <h1 className="text-white font-cormorant text-6xl md:text-8xl mb-4 ">
           Adrion
         </h1>
 
