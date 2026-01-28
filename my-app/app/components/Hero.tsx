@@ -21,11 +21,12 @@ const Hero = () => {
         <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 mt">
           <h1 className="main-title text-3xl sm:text-5xl md:text-[70px] text-white max-w-5xl leading-[1.1]">
             Curated Croatian <br />
-            <span className="italic">Journeys</span>
+            Journeys
           </h1>
 
-          <p className="main-subtitle text-white/90 mt-6 max-w-2xl text-xl md:text-3xl">
-            For those who appreciate quality, balance and authentic experiences
+          <p className="main-subtitle font-pinyon text-white/90 mt-6 max-w-2xl text-xl md:text-3xl">
+            For those who appreciate quality, adventure and authentic
+            experiences
           </p>
 
           <a

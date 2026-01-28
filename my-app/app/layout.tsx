@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-  title: "Adrion - DMC Boutique agency",
+  title: "Adrion Custom Travel Agency",
   description: "Currently under development",
 };
 

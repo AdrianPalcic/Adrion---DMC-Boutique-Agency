@@ -91,7 +91,7 @@ const Destinations = () => {
           className="z-20 w-full h-full relative flex flex-col items-center"
         >
           <div className="my-6 mx-1">
-            <h1 className="font-pinyon text-3xl lg:text-6xl text-white text-center">
+            <h1 className="font-cormorant text-3xl lg:text-5xl text-white text-center">
               Where our journeys take place
             </h1>
           </div>

@@ -24,16 +24,18 @@ const Footer = () => {
 
         {/* Sredina - Logo ili Ime (opcionalno) */}
         <div className="flex flex-col items-center">
-          <div className="w-[120px] h-[120px] sm:w-fit">
+          <div className="w-[60px] h-auto  sm:w-fit">
             <img
               src="/images/logo-b-w.svg"
               alt="Logo Adrion"
-              className="w-full h-full "
+              className="w-[80px] h-full object-cover"
             />
           </div>
-          <div className="font-ovo text-black/60 text-3xl">Adrion</div>
-          <div className="font-ovo text-black/60 text-xl">
-            Custom Travel Agency
+          <div className="font-cormorant uppercase text-black/60 text-3xl">
+            Adrion Custom
+          </div>
+          <div className="font-cormorant text-black/60 text-xl">
+            Travel Agency
           </div>
         </div>
 

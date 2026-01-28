@@ -45,7 +45,7 @@ const DayTrips = () => {
             Short on time?
           </p>
           <h2 className="text-black text-5xl md:text-6xl font-cormorant leading-tight">
-            Curated Day Experiences
+            Curated day experiences
           </h2>
         </div>
         <p className="text-black/60 font-ovo max-w-sm text-sm leading-relaxed">
@@ -75,7 +75,7 @@ const DayTrips = () => {
               <span className="text-(--yellow) text-[10px] uppercase tracking-[0.3em] mb-2 font-bold">
                 {trip.category}
               </span>
-              <h4 className="text-black text-2xl font-cormorant italic mb-3 group-hover:text-(--green) transition-colors">
+              <h4 className="text-black text-2xl font-cormorant  mb-3 group-hover:text-(--green) transition-colors">
                 {trip.title}
               </h4>
               <div className="w-8 h-px bg-black/20 mb-3" />
