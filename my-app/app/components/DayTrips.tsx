@@ -5,7 +5,7 @@ import Image from "next/image";
 export const dayTrips = [
   {
     id: 1,
-    title: "Cetina Biking Odyssey",
+    title: "Cetina Canyon Bike Adventures",
     category: "Island Hopping",
     image: "/images/bike.webp",
     duration: "4 Hours",
@@ -15,7 +15,7 @@ export const dayTrips = [
   },
   {
     id: 2,
-    title: "Plitvice Lakes: The Emerald Path",
+    title: "Plitvice Waterways",
     category: "Nature & Hiking",
     image: "/images/plitvice-slapovi-next.webp",
     duration: "8 Hours",

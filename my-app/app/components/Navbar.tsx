@@ -6,12 +6,16 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-5 md:px-12 flex justify-between items-center backdrop-blur-sm bg-black/10 border-b border-white/5">
       {/* LOGO DIO */}
-      <div className="flex flex-col">
-        <span className="text-white font-pinyon text-3xl tracking-wider leading-none">
-          Adrion
-        </span>
-        <span className="text-white/40 text-[8px] uppercase tracking-[0.4em] mt-1 ml-0.5">
-          Custom Travel Agency
+      <div className="flex flex-col sm:flex-row items-start sm:items-end gap-3">
+        <div className="w-[60px] h-auto sm:w-fit">
+          <img
+            src="/images/logo-white.svg"
+            alt="Logo Adrion"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <span className="text-white/80 text-[8px] sm:text-[12px] md:text-[16px] uppercase tracking-[0.4em] mt-1 ml-0.5 font-ovo">
+          Adrion Custom Travel Agency
         </span>
       </div>
 
