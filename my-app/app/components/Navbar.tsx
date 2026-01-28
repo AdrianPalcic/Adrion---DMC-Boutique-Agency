@@ -6,17 +6,22 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-5 md:px-12 flex justify-between items-center backdrop-blur-sm bg-black/10 border-b border-white/5">
       {/* LOGO DIO */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-end gap-3">
+      <div className="flex flex-col sm:flex-row items-center sm:items-end gap-0">
         <div className="w-[60px] sm:w-fit">
           <img
-            src="/images/logo-white.svg"
+            src="/images/logo-white-try.png"
             alt="Logo Adrion"
-            className="w-full  object-cover"
+            className="w-[50px] sm:w-[60px] object-cover"
           />
         </div>
-        <span className="text-white text-[8px] sm:text-[12px] md:text-[20px] uppercase tracking-[0.2em] mt-1 ml-0.5 font-cormorant italic">
-          Adrion Custom Travel Agency
-        </span>
+        <div className="flex flex-col sm:flex-row">
+          <span className="text-white text-[10px] text-center sm:text-[12px] md:text-[20px] uppercase tracking-[0.2em] mt-1 ml-0.5 font-cormorant">
+            Adrion Custom
+          </span>
+          <span className="text-white text-[8px] text-center sm:text-[12px] md:text-[20px] uppercase tracking-[0.2em] mt-1 ml-0.5 font-cormorant">
+            Travel Agency
+          </span>
+        </div>
       </div>
 
       {/* STATUS PORUKA - UNDER DEVELOPMENT */}
