@@ -6,7 +6,7 @@ export const dayTrips = [
   {
     id: 1,
     title: "Cetina Canyon Bike Adventures",
-    category: "Island Hopping",
+    category: "Biking",
     image: "/images/bike.webp",
     duration: "4 Hours",
     price: "From €120",
