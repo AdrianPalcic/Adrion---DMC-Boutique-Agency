@@ -23,7 +23,19 @@ const Footer = () => {
         </div>
 
         {/* Sredina - Logo ili Ime (opcionalno) */}
-        <div className="font-pinyon text-black/20 text-3xl">Adrion</div>
+        <div className="flex flex-col items-center">
+          <div className="w-[120px] h-[120px] sm:w-fit">
+            <img
+              src="/images/logo-b-w.svg"
+              alt="Logo Adrion"
+              className="w-full h-full "
+            />
+          </div>
+          <div className="font-ovo text-black/60 text-3xl">Adrion</div>
+          <div className="font-ovo text-black/60 text-xl">
+            Custom Travel Agency
+          </div>
+        </div>
 
         {/* Desna strana - Suptilna poruka */}
         <div className="text-right">
