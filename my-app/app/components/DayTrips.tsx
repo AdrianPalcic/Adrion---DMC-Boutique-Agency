@@ -5,8 +5,13 @@ import Image from "next/image";
 export const dayTrips = [
   {
     id: 1,
+<<<<<<< HEAD
     title: "Cetina Canyon Bike Adventures",
     category: "Island Hopping",
+=======
+    title: "Cetina Canyon Bike Adventure",
+    category: "Biking",
+>>>>>>> f4a19e6edd19d3aaab0e197ca021fc01b1794d47
     image: "/images/bike.webp",
     duration: "4 Hours",
     price: "From €120",
