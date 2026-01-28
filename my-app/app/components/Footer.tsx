@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Lijeva strana - Copyright & Status */}
         <div className="flex flex-col items-center md:items-start gap-2">
-          <p className="text-black/30 text-[10px] uppercase tracking-[0.3em]">
+          <p className="text-black/30 text-center text-[10px] uppercase tracking-[0.3em]">
             © {currentYear} Adrion Custom Travel Agency
           </p>
           <div className="flex items-center gap-2">
@@ -16,7 +16,7 @@ const Footer = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-(--yellow) opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-(--yellow)"></span>
             </span>
-            <p className="text-(--yellow)/80 text-[10px] uppercase tracking-[0.2em] font-medium italic">
+            <p className="text-(--yellow)/80 text-[10px] text-start uppercase tracking-[0.2em] font-medium italic">
               Currently under development
             </p>
           </div>
@@ -26,15 +26,15 @@ const Footer = () => {
         <div className="flex flex-col items-center">
           <div className="w-[60px] h-auto  sm:w-fit">
             <img
-              src="/images/logo-b-w.svg"
+              src="/images/logo-try.png"
               alt="Logo Adrion"
               className="w-[80px] h-full object-cover"
             />
           </div>
-          <div className="font-cormorant uppercase text-black/60 text-3xl">
+          <div className="font-cormorant uppercase text-black/60 text-xl sm:text-3xl">
             Adrion Custom
           </div>
-          <div className="font-cormorant text-black/60 text-xl">
+          <div className="font-cormorant text-black/60 text-lg">
             Travel Agency
           </div>
         </div>
