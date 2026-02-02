@@ -125,7 +125,7 @@ const Navbar = () => {
                     className="relative group cursor-pointer overflow-hidden w-fit"
                   >
                     {tour}
-                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-(--deep-blue) transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
                   </li>
                 ))}
               </ul>
@@ -136,7 +136,7 @@ const Navbar = () => {
                     className="relative group cursor-pointer overflow-hidden w-fit"
                   >
                     {item}
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-(--deep-blue) transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
                   </li>
                 ))}
               </ul>
