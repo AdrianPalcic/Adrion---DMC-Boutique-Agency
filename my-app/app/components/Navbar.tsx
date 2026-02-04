@@ -10,6 +10,7 @@ const Navbar = () => {
   const desktopDestinationsRef = useRef<HTMLUListElement>(null);
   const mobileDestinationsRef = useRef<HTMLUListElement>(null);
   const linksRef = useRef<HTMLUListElement>(null);
+  const socialsRef = useRef<HTMLUListElement>(null);
   const contactlinksRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +33,8 @@ const Navbar = () => {
       !closeButton ||
       !mobileDestinationsRef.current ||
       !linksRef.current ||
-      !contactlinksRef.current
+      !contactlinksRef.current ||
+      !socialsRef.current
     )
       return;
 
@@ -44,6 +46,7 @@ const Navbar = () => {
     const mobileDestinations = Array.from(
       mobileDestinationsRef.current.children,
     ) as HTMLElement[];
+    const socials = Array.from(socialsRef.current.children) as HTMLElement[];
 
     const links = Array.from(linksRef.current.children) as HTMLElement[];
 
@@ -98,6 +101,18 @@ const Navbar = () => {
     );
     tl.from(
       contactLinks,
+      {
+        y: 10,
+        opacity: 0,
+        filter: "blur(10px)",
+        duration: 0.3,
+        stagger: 0.06,
+        ease: "power1.inOut",
+      },
+      "-=0.6",
+    );
+    tl.from(
+      socials,
       {
         y: 10,
         opacity: 0,
@@ -259,7 +274,10 @@ const Navbar = () => {
               </div>
 
               {/* Social */}
-              <ul className="flex gap-4 pt-6 uppercase text-(--shore)">
+              <ul
+                ref={socialsRef}
+                className="flex gap-4 pt-6 uppercase text-(--deep-blue)"
+              >
                 {["Facebook", "Instagram", "LinkedIn"].map((item) => (
                   <li
                     key={item}
