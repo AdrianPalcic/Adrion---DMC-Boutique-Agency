@@ -6,6 +6,8 @@ import gsap from "gsap";
 import { X } from "lucide-react";
 
 const Navbar = () => {
+  const menuRef = useRef<HTMLDivElement>(null);
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
   const closeRef = useRef(null);
   const desktopDestinationsRef = useRef<HTMLUListElement>(null);
   const mobileDestinationsRef = useRef<HTMLUListElement>(null);
@@ -15,22 +17,20 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Scroll handler za navbar background
+  // Scroll handler ostaje isti
   useEffect(() => {
     const onScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const animateAll = () => {
-    const tl = gsap.timeline();
-    const closeButton = closeRef.current;
+  // Inicijalizacija Timeline-a
+  useEffect(() => {
     if (
+      !menuRef.current ||
       !desktopDestinationsRef.current ||
-      !closeButton ||
       !mobileDestinationsRef.current ||
       !linksRef.current ||
       !contactlinksRef.current ||
@@ -38,98 +38,105 @@ const Navbar = () => {
     )
       return;
 
-    // Dohvatimo sve li elemente iz ul
     const desktopDestinations = Array.from(
       desktopDestinationsRef.current.children,
-    ) as HTMLElement[];
-
+    );
     const mobileDestinations = Array.from(
       mobileDestinationsRef.current.children,
-    ) as HTMLElement[];
-    const socials = Array.from(socialsRef.current.children) as HTMLElement[];
-
-    const links = Array.from(linksRef.current.children) as HTMLElement[];
-
-    const contactLinks = Array.from(
-      contactlinksRef.current.children,
-    ) as HTMLElement[];
-    // Button
-    tl.from(
-      closeRef.current,
-      {
-        y: -60,
-        opacity: 0,
-        rotate: 90,
-        delay: 0.5,
-        ease: "power1.inOut",
-      },
-      "-=0.2",
     );
+    const socials = Array.from(socialsRef.current.children);
+    const links = Array.from(linksRef.current.children);
+    const contactLinks = Array.from(contactlinksRef.current.children);
 
-    //Desktop links
-    tl.from(desktopDestinations, {
-      y: 10,
-      opacity: 0,
-      filter: "blur(10px)",
-      duration: 0.3,
-      stagger: 0.06,
-      ease: "power1.inOut",
+    // Kreiramo timeline koji je inicijalno pauziran
+    const tl = gsap.timeline({
+      paused: true,
+      defaults: { ease: "power2.inOut" },
     });
-    tl.from(
-      mobileDestinations,
-      {
-        y: 10,
-        opacity: 0,
-        filter: "blur(10px)",
-        duration: 0.3,
-        stagger: 0.06,
-        ease: "power1.inOut",
-      },
-      "-=1.2",
-    );
-    tl.from(
-      links,
-      {
-        y: 10,
-        opacity: 0,
-        filter: "blur(10px)",
-        duration: 0.3,
-        stagger: 0.06,
-        ease: "power1.inOut",
-      },
-      "-=0.7",
-    );
-    tl.from(
-      contactLinks,
-      {
-        y: 10,
-        opacity: 0,
-        filter: "blur(10px)",
-        duration: 0.3,
-        stagger: 0.06,
-        ease: "power1.inOut",
-      },
-      "-=0.6",
-    );
-    tl.from(
-      socials,
-      {
-        y: 10,
-        opacity: 0,
-        filter: "blur(10px)",
-        duration: 0.3,
-        stagger: 0.06,
-        ease: "power1.inOut",
-      },
-      "-=0.6",
-    );
-  };
 
+    // Redoslijed animacije
+    tl.to(menuRef.current, {
+      y: "0%",
+      duration: 0.6,
+    })
+      .from(
+        closeRef.current,
+        {
+          y: -60,
+          opacity: 0,
+          rotate: 90,
+          duration: 0.5,
+        },
+        "-=0.2",
+      )
+      .from(
+        desktopDestinations,
+        {
+          y: 10,
+          opacity: 0,
+          filter: "blur(10px)",
+          duration: 0.3,
+          stagger: 0.06,
+        },
+        "-=0.4",
+      )
+      .from(
+        mobileDestinations,
+        {
+          y: 10,
+          opacity: 0,
+          filter: "blur(10px)",
+          duration: 0.3,
+          stagger: 0.06,
+        },
+        "-=1",
+      )
+      .from(
+        links,
+        {
+          y: 10,
+          opacity: 0,
+          filter: "blur(10px)",
+          duration: 0.3,
+          stagger: 0.06,
+        },
+        "-=0.6",
+      )
+      .from(
+        contactLinks,
+        {
+          y: 10,
+          opacity: 0,
+          filter: "blur(10px)",
+          duration: 0.3,
+          stagger: 0.06,
+        },
+        "-=0.5",
+      )
+      .from(
+        socials,
+        {
+          y: 10,
+          opacity: 0,
+          filter: "blur(10px)",
+          duration: 0.3,
+          stagger: 0.06,
+        },
+        "-=0.5",
+      );
+
+    tlRef.current = tl;
+  }, []);
+
+  // Reagiraj na promjenu isOpen
   useEffect(() => {
+    if (!tlRef.current) return;
     if (isOpen) {
-      animateAll();
+      tlRef.current.play();
+    } else {
+      tlRef.current.reverse();
     }
-  });
+  }, [isOpen]);
 
   return (
     <>
@@ -139,7 +146,7 @@ const Navbar = () => {
           ${isOpen ? "opacity-0 pointer-events-none" : "opacity-100"}
         `}
       >
-        {/* Logo */}
+        {/* Logo sekcija - tvoj originalni stil */}
         <div className="flex flex-col items-center gap-0">
           <div className=" sm:w-fit">
             <img
@@ -171,17 +178,18 @@ const Navbar = () => {
         </div>
       </nav>
 
+      {/* Fullscreen Overlay - maknut CSS transition radi GSAP-a */}
       <div
-        className={`fixed left-0 top-0 w-full h-full min-h-full z-50 flex transform transition-transform duration-500 
-    ${isOpen ? "translate-y-0" : "-translate-y-full"}`}
+        ref={menuRef}
+        className="fixed left-0 top-0 w-full h-full min-h-full z-50 flex transform -translate-y-full"
       >
         <div
-          className="absolute top-6 right-6 cursor-pointer w-8 h-8 flex items-center justify-center translate-x-1.5"
+          className="absolute top-6 right-6 cursor-pointer w-8 h-8 flex items-center justify-center translate-x-1.5 z-[60]"
           onClick={() => setIsOpen(false)}
         >
-          {" "}
           <X ref={closeRef} className="scale-[2] text-(--deep-blue)" />
         </div>
+
         {/* Lijeva strana: hero */}
         <div className=" hidden md:block flex-[0.6] relative h-full">
           <div className="absolute inset-0 bg-black/60 z-10" />
@@ -194,7 +202,6 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Hero content */}
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6 z-20">
             <ul
               ref={desktopDestinationsRef}
@@ -224,7 +231,6 @@ const Navbar = () => {
         {/* Desna strana: menu + contact */}
         <div className="w-full flex-1 md:flex-[0.4] h-full flex flex-col justify-between bg-(--shore) text-(--deep-blue)">
           <div className="flex flex-col justify-center px-8 py-12 gap-12 h-full">
-            {/* Menu + Contact info */}
             <div className="flex flex-col gap-4">
               <ul
                 ref={mobileDestinationsRef}
@@ -241,7 +247,7 @@ const Navbar = () => {
                 ].map((tour) => (
                   <li
                     key={tour}
-                    className="relative group cursor-pointer overflow-hidden w-fit "
+                    className="relative group cursor-pointer overflow-hidden w-fit"
                   >
                     {tour}
                     <span className="absolute bottom-0 left-0 w-full h-[1px] bg-(--deep-blue) transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
@@ -263,7 +269,6 @@ const Navbar = () => {
                 ))}
               </ul>
 
-              {/* Contact info */}
               <div
                 ref={contactlinksRef}
                 className="mt-6 text-[14px] flex flex-col gap-1 text-(--deep-blue)"
@@ -273,7 +278,6 @@ const Navbar = () => {
                 <span>Address: Zagreb, Croatia</span>
               </div>
 
-              {/* Social */}
               <ul
                 ref={socialsRef}
                 className="flex gap-4 pt-6 uppercase text-(--deep-blue)"
@@ -281,7 +285,7 @@ const Navbar = () => {
                 {["Facebook", "Instagram", "LinkedIn"].map((item) => (
                   <li
                     key={item}
-                    className="cursor-pointer hover:text-gray-300 transition-colors"
+                    className="cursor-pointer hover:text-gray-400 transition-colors"
                   >
                     {item}
                   </li>
