@@ -1,9 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import gsap from "gsap";
+import { X } from "lucide-react";
 
 const Navbar = () => {
+  const closeRef = useRef(null);
+  const desktopDestinationsRef = useRef<HTMLUListElement>(null);
+  const mobileDestinationsRef = useRef<HTMLUListElement>(null);
+  const linksRef = useRef<HTMLUListElement>(null);
+  const contactlinksRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,6 +23,98 @@ const Navbar = () => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const animateAll = () => {
+    const tl = gsap.timeline();
+    const closeButton = closeRef.current;
+    if (
+      !desktopDestinationsRef.current ||
+      !closeButton ||
+      !mobileDestinationsRef.current ||
+      !linksRef.current ||
+      !contactlinksRef.current
+    )
+      return;
+
+    // Dohvatimo sve li elemente iz ul
+    const desktopDestinations = Array.from(
+      desktopDestinationsRef.current.children,
+    ) as HTMLElement[];
+
+    const mobileDestinations = Array.from(
+      mobileDestinationsRef.current.children,
+    ) as HTMLElement[];
+
+    const links = Array.from(linksRef.current.children) as HTMLElement[];
+
+    const contactLinks = Array.from(
+      contactlinksRef.current.children,
+    ) as HTMLElement[];
+    // Button
+    tl.from(
+      closeRef.current,
+      {
+        y: -60,
+        opacity: 0,
+        rotate: 90,
+        delay: 0.5,
+        ease: "power1.inOut",
+      },
+      "-=0.2",
+    );
+
+    //Desktop links
+    tl.from(desktopDestinations, {
+      y: 10,
+      opacity: 0,
+      filter: "blur(10px)",
+      duration: 0.3,
+      stagger: 0.06,
+      ease: "power1.inOut",
+    });
+    tl.from(
+      mobileDestinations,
+      {
+        y: 10,
+        opacity: 0,
+        filter: "blur(10px)",
+        duration: 0.3,
+        stagger: 0.06,
+        ease: "power1.inOut",
+      },
+      "-=1.2",
+    );
+    tl.from(
+      links,
+      {
+        y: 10,
+        opacity: 0,
+        filter: "blur(10px)",
+        duration: 0.3,
+        stagger: 0.06,
+        ease: "power1.inOut",
+      },
+      "-=0.7",
+    );
+    tl.from(
+      contactLinks,
+      {
+        y: 10,
+        opacity: 0,
+        filter: "blur(10px)",
+        duration: 0.3,
+        stagger: 0.06,
+        ease: "power1.inOut",
+      },
+      "-=0.6",
+    );
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      animateAll();
+    }
+  });
 
   return (
     <>
@@ -49,25 +148,24 @@ const Navbar = () => {
         {/* Hamburger */}
         <div
           onClick={() => setIsOpen(true)}
-          className="flex flex-col gap-1.5 cursor-pointer"
+          className="flex flex-col gap-1.5 cursor-pointer group"
         >
-          <div className="w-8 h-px bg-white"></div>
-          <div className="w-5 h-px bg-white self-end"></div>
+          <div className="w-8 h-px bg-white group-hover:w-12 duration-300 transition-all"></div>
+          <div className="w-5 h-px bg-white self-end group-hover:w-8 duration-300 transition-all"></div>
+          <div className="w-8 h-px bg-white group-hover:w-12 duration-300 transition-all"></div>
         </div>
       </nav>
 
       <div
-        className={`fixed left-0 top-0 w-full h-full min-h-full z-50 flex transform transition-transform duration-500 origin-bottom
-    ${isOpen ? "translate-y-0" : "translate-y-full"}
-  `}
+        className={`fixed left-0 top-0 w-full h-full min-h-full z-50 flex transform transition-transform duration-500 
+    ${isOpen ? "translate-y-0" : "-translate-y-full"}`}
       >
         <div
-          className="absolute top-6 right-6 cursor-pointer w-8 h-8 flex items-center justify-center"
+          className="absolute top-6 right-6 cursor-pointer w-8 h-8 flex items-center justify-center translate-x-1.5"
           onClick={() => setIsOpen(false)}
         >
           {" "}
-          <div className="absolute w-12 h-[3px] bg-(--deep-blue) rotate-45"></div>{" "}
-          <div className="absolute w-12 h-[3px] bg-(--deep-blue) -rotate-45"></div>{" "}
+          <X ref={closeRef} className="scale-[2] text-(--deep-blue)" />
         </div>
         {/* Lijeva strana: hero */}
         <div className=" hidden md:block flex-[0.6] relative h-full">
@@ -83,7 +181,10 @@ const Navbar = () => {
 
           {/* Hero content */}
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6 z-20">
-            <ul className="flex flex-col font-ovo gap-6 text-4xl lg:text-5xl text-white">
+            <ul
+              ref={desktopDestinationsRef}
+              className="flex flex-col font-ovo gap-6 text-4xl lg:text-5xl text-(--shore)"
+            >
               {[
                 "Dalmacija",
                 "Slavonija",
@@ -98,7 +199,7 @@ const Navbar = () => {
                   className="relative group cursor-pointer overflow-hidden w-fit"
                 >
                   {tour}
-                  <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
+                  <span className="absolute bottom-0 left-0 w-full h-[1px] bg-(--shore) transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
                 </li>
               ))}
             </ul>
@@ -106,11 +207,14 @@ const Navbar = () => {
         </div>
 
         {/* Desna strana: menu + contact */}
-        <div className="w-full flex-1 md:flex-[0.4] h-full flex flex-col justify-between bg-[#FAF9F6] text-[var(--shore)]">
+        <div className="w-full flex-1 md:flex-[0.4] h-full flex flex-col justify-between bg-(--shore) text-(--deep-blue)">
           <div className="flex flex-col justify-center px-8 py-12 gap-12 h-full">
             {/* Menu + Contact info */}
             <div className="flex flex-col gap-4">
-              <ul className="flex md:hidden flex-col gap-3 uppercase text-(--deep-blue) text-[18px] font-bold">
+              <ul
+                ref={mobileDestinationsRef}
+                className="flex md:hidden flex-col gap-3 uppercase text-(--deep-blue) text-[18px] font-bold"
+              >
                 {[
                   "Dalmacija",
                   "Slavonija",
@@ -122,14 +226,17 @@ const Navbar = () => {
                 ].map((tour) => (
                   <li
                     key={tour}
-                    className="relative group cursor-pointer overflow-hidden w-fit"
+                    className="relative group cursor-pointer overflow-hidden w-fit "
                   >
                     {tour}
                     <span className="absolute bottom-0 left-0 w-full h-[1px] bg-(--deep-blue) transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
                   </li>
                 ))}
               </ul>
-              <ul className="flex flex-col gap-4 uppercase text-[18px] text-(--deep-blue) font-bold">
+              <ul
+                ref={linksRef}
+                className="flex flex-col gap-4 uppercase text-[18px] text-(--deep-blue) font-bold"
+              >
                 {["Our Partners", "Journal", "Contact"].map((item) => (
                   <li
                     key={item}
@@ -142,14 +249,17 @@ const Navbar = () => {
               </ul>
 
               {/* Contact info */}
-              <div className="mt-6 text-[14px] flex flex-col gap-1 text-(--deep-blue)">
+              <div
+                ref={contactlinksRef}
+                className="mt-6 text-[14px] flex flex-col gap-1 text-(--deep-blue)"
+              >
                 <span>Email: info@adriontravel.com</span>
                 <span>Phone: +385 99 512 1707</span>
                 <span>Address: Zagreb, Croatia</span>
               </div>
 
               {/* Social */}
-              <ul className="flex gap-4 pt-6 uppercase text-(--deep-blue)">
+              <ul className="flex gap-4 pt-6 uppercase text-(--shore)">
                 {["Facebook", "Instagram", "LinkedIn"].map((item) => (
                   <li
                     key={item}

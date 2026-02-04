@@ -1,6 +1,7 @@
 "use client";
 
 import { destinacije } from "@/constants";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
@@ -131,7 +132,7 @@ const Destinations = () => {
           </div>
 
           {/* NAVIGATION */}
-          <div className="absolute bottom-12 right-12 z-40 flex items-center gap-8">
+          <div className="absolute bottom-12 left-10 sm:right-12 z-40 flex items-center gap-8">
             <div className="flex flex-col items-start text-white">
               <span className="text-4xl font-light">
                 0
@@ -147,23 +148,39 @@ const Destinations = () => {
                 />
               </div>
             </div>
+          </div>
+          {/* DESKTOP BUTTONS */}
+          <button
+            onClick={handlePrev}
+            disabled={isChanging}
+            className="w-16 h-16 bg-(--green) text-(--shore) rounded-full hidden sm:flex items-center justify-center absolute top-1/2 left-10"
+          >
+            <ArrowLeft />
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={isChanging}
+            className="w-16 h-16 bg-(--green) text-(--shore) rounded-full hidden sm:flex items-center justify-center absolute top-1/2 right-10"
+          >
+            <ArrowRight />
+          </button>
 
-            <div className="flex gap-4">
-              <button
-                onClick={handlePrev}
-                disabled={isChanging}
-                className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-(--green) transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                ←
-              </button>
-              <button
-                onClick={handleNext}
-                disabled={isChanging}
-                className="w-12 h-12 border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-(--green) transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                →
-              </button>
-            </div>
+          {/* MOBILE BUTTONS */}
+          <div className="absolute right-10 bottom-9 flex gap-2">
+            <button
+              onClick={handlePrev}
+              disabled={isChanging}
+              className="w-10 h-10 border border-(--shore) text-(--shore) rounded-full flex sm:hidden items-center justify-center "
+            >
+              ←
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={isChanging}
+              className="w-10 h-10 border border-(--shore) text-(--shore) rounded-full flex sm:hidden items-center justify-center "
+            >
+              →
+            </button>
           </div>
         </div>
       </section>
