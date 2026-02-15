@@ -3,7 +3,6 @@
 @theme {
   /* FONTOVI */
   --font-cormorant: var(--font-cormorant);
-  --font-trajan: var(--font-trajan)
   --font-ovo: var(--font-ovo);
   --font-pinyon: var(--font-pinyon);
 
@@ -50,7 +49,12 @@
 }
 
 @layer components {
-
+  .main-title {
+    font-family: var(--font-cormorant);
+    font-style: italic;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
 
   .paragraph-one {
     font-family: var(--font-ovo);

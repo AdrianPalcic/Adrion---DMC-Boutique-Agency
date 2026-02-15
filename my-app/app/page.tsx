@@ -5,13 +5,9 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import Destinations from "./components/Destinations";
 import CTA from "./components/CTA";
-
+import MultiDays from "./components/MultiDays";
+import DayTrips from "./components/DayTrips";
 import ContactForm from "./components/ContactForm";
-import TripCarouselComponent from "./components/TripCarouselComponent";
-import { dayTrips, multidays } from "@/constants";
-import ImageCTA from "./components/ImageCTA";
-import TransferCTA from "./components/TransfersCTA";
-import { SwipeCarousel } from "./components/SwipeCarousel";
 
 export default function Home() {
   return (
@@ -19,13 +15,10 @@ export default function Home() {
       <Hero />
       <About />
       <Destinations />
-      {/* <SwipeCarousel /> */}
       <CTA />
-      <TransferCTA />
-      <TripCarouselComponent tag="Something" title="Multi-day adventures" description="Carefully planned single-day escapes for those who want to experience the essence of Croatia in a heartbeat." trips={multidays} />
-      <TripCarouselComponent tag="Something" title="Curated day adventures" description="Carefully planned single-day escapes for those who want to experience the essence of Croatia in a heartbeat." trips={dayTrips} />
-      {/* <ContactForm /> */}
-      <ImageCTA />
+      <MultiDays />
+      <DayTrips />
+      <ContactForm />
     </main>
   );
-}   
+}

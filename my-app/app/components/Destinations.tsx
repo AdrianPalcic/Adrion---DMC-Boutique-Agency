@@ -1,149 +1,190 @@
 "use client";
 
 import { destinacije } from "@/constants";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { motion, useMotionValue, useTransform } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import { useInView } from "framer-motion";
-import { gsap } from "gsap";
+import { useState, useEffect } from "react";
+
+interface Destination {
+  id: number;
+  name: string;
+  description: string;
+  backgroundImage: string;
+  frontImage: string;
+}
 
 const Destinations = () => {
-  const [index, setIndex] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: false, amount: 0.3 });
-  
-  // Koristimo dragX za vizualni feedback dok korisnik vuče
-  const dragX = useMotionValue(0);
+  const [currentDestination, setCurrentDestination] = useState<Destination>(
+    destinacije[0],
+  );
 
-  // GSAP animacija
- useEffect(() => {
-  if (!isInView) {
-    const slides = containerRef.current?.querySelectorAll(".slide-content");
-    slides?.forEach((slide) => {
-      const el = slide.querySelectorAll(".dest-title, .dest-image, .dest-desc");
-      gsap.set(el, { opacity: 0, scale: 0.2, y: 40 });
-    });
-    return;
-  }
+  // State za praćenje učitavanja
+  const [isBgLoaded, setIsBgLoaded] = useState(false);
+  const [isFrontLoaded, setIsFrontLoaded] = useState(false);
+  const [isChanging, setIsChanging] = useState(false);
 
-  const slides = containerRef.current?.querySelectorAll(".slide-content");
-  if (!slides) return;
-
-  slides.forEach((slide, i) => {
-    const title = slide.querySelector(".dest-title");
-    const image = slide.querySelector(".dest-image");
-    const description = slide.querySelector(".dest-desc");
-
-    if (i === index) {
-      const tl = gsap.timeline({ delay: 0.2 });
-      tl.to(image, { opacity: 1, scale: 1, duration: 1.2, ease: "expo.out" })
-        .to(title, { opacity: 1, scale: 1, y: 0, duration: 1, ease: "expo.out" }, "-=0.9")
-        .to(description, { opacity: 1, y: 0, scale: 1, duration: 1, ease: "expo.out" }, "-=0.8");
-    } else {
-      gsap.set([title, image, description], { 
-        opacity: 0, 
-        scale: 0.2, 
-        delay:0.3,
-        y: 40,
-        overwrite: true 
-      });
+  // Kada se sve slike učitaju, gasimo "changing" state
+  useEffect(() => {
+    if (isBgLoaded && isFrontLoaded) {
+      setIsChanging(false);
     }
-  });
-}, [index, isInView]); // Dodali smo isInView ovdje
+  }, [isBgLoaded, isFrontLoaded]);
 
-  const onDragEnd = (e: any, info: any) => {
-    const threshold = 30; 
-    const velocity = info.velocity.x;
-    const offset = info.offset.x;
+  const triggerChange = (nextDest: Destination) => {
+    setIsChanging(true);
+    setIsBgLoaded(false);
+    setIsFrontLoaded(false);
+    setCurrentDestination(nextDest);
+  };
 
+  const handleNext = () => {
+    const currentIndex = destinacije.findIndex(
+      (d) => d.id === currentDestination.id,
+    );
+    const nextIndex = (currentIndex + 1) % destinacije.length;
+    triggerChange(destinacije[nextIndex]);
+  };
 
-    if (offset < -threshold || velocity < -500) {
-      if (index < destinacije.length - 1) {
-        setIndex(index + 1);
-      }
-    } else if (offset > threshold || velocity > 500) {
-      if (index > 0) {
-        setIndex(index - 1);
-      }
-    }
-    
-    dragX.set(0);
+  const handlePrev = () => {
+    const currentIndex = destinacije.findIndex(
+      (d) => d.id === currentDestination.id,
+    );
+    const prevIndex =
+      (currentIndex - 1 + destinacije.length) % destinacije.length;
+    triggerChange(destinacije[prevIndex]);
   };
 
   return (
-    <section className="w-full h-[dvh] bg-black overflow-hidden relative h-dvh touch-none">
-      <motion.div
-        ref={containerRef}
-        drag="x"
-        // Constraints sprječavaju da se cijeli div odvuče, ali dragElastic dopušta "peek" efekt
-        dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.1} 
-        onDragEnd={onDragEnd}
-        animate={{
-          // Postotni pomak temeljen na indexu je najsigurnija metoda protiv skippinga
-          translateX: `-${index * 100}%`,
-        }}
-        transition={{
-          type: "spring",
-          damping: 30,
-          stiffness: 180,
-          mass: 1
-        }}
-        className="flex h-full w-full cursor-grab active:cursor-grabbing"
-      >
-        {destinacije.map((dest) => (
-          <a
-            key={dest.id}
-            className="relative w-full h-full flex-shrink-0 overflow-hidden"
-          >
-            {/* BACKGROUND */}
-            <Image
-              src={dest.backgroundImage}
-              alt="BG"
-              fill
-              priority
-              className="object-cover pointer-events-none select-none"
-            />
-            <div className="absolute inset-0 bg-black/60 z-10" />
+    <>
+      <section className="w-full h-dvh relative overflow-hidden bg-black">
+        {/* LOADER UNUTAR SEKCIJE */}
+        <div
+          className={`absolute inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-md transition-opacity duration-700 ${isChanging ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        >
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-12 border-2 border-(--yellow)/20 border-t-(--yellow) rounded-full animate-spin mb-4" />
+            <p className="text-(--yellow) font-pinyon text-2xl animate-pulse">
+              Adrion
+            </p>
+          </div>
+        </div>
 
-            {/* CONTENT */}
-            <div className="slide-content relative z-20 w-full h-full flex flex-col items-center pointer-events-none select-none">
-              <div className="mt-12 px-4">
-                <h1 className="font-pinyon tracking-widest text-3xl lg:text-5xl text-white text-center">
-                  Where our journeys take place
-                </h1>
-              </div>
+        {/* BACKGROUND IMAGE */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            key={currentDestination.backgroundImage}
+            src={currentDestination.backgroundImage}
+            sizes="100vw"
+            alt="Background"
+            fill
+            quality={75}
+            priority
+            onLoad={() => setIsBgLoaded(true)}
+            className={`object-cover object-center transition-all duration-1000 ${isChanging ? "scale-110 blur-sm" : "scale-100 blur-0"}`}
+          />
+        </div>
 
-              <div className="flex-1 flex items-start justify-center w-full">
-                <div className="relative">
-                  <div className="dest-image opacity-0">
-                    <Image
-                      src={dest.frontImage}
-                      width={400}
-                      height={500}
-                      alt={dest.name}
-                      className="object-cover w-[280px] h-[380px] sm:w-[300px] sm:h-[350px] md:w-[400px] md:h-[500px]"
-                    />
-                    <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0 bg-black/50 z-10"></div>
+
+        {/* CONTENT */}
+        <div
+          id="content"
+          className="z-20 w-full h-full relative flex flex-col items-center"
+        >
+          <div className="my-6 mx-1">
+            <h1 className="font-cormorant text-3xl lg:text-5xl text-white text-center">
+              Where our journeys take place
+            </h1>
+          </div>
+
+          <div className="relative flex flex-col items-center justify-center flex-1 w-full">
+            <div className="relative group shadow-2xl">
+              <Image
+                key={currentDestination.frontImage}
+                src={currentDestination.frontImage}
+                width={400}
+                height={500}
+                alt={currentDestination.name}
+                onLoad={() => setIsFrontLoaded(true)}
+                className={`object-cover w-[300px] h-[400px] sm:w-[400px] sm:h-[500px] transition-all duration-700 ${isChanging ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+              />
+
+              <div
+                className={`absolute inset-0 flex flex-col items-center justify-center   group ${isFrontLoaded ? "bg-black/40" : ""}`}
+              >
+                <h2 className="text-white text-center text-6xl lg:text-9xl font-cormorant font-medium italic tracking-wider drop-shadow-lg">
+                  {currentDestination.name}
+                </h2>
+                <p className="text-white font-ovo text-[18px] text-center opacity-80 mt-6 max-w-xs px-4">
+                  {currentDestination.description}
+                </p>
+
+                <button className="group flex flex-col items-center gap-2 cursor-pointer mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
+                  <span className="text-(--yellow) uppercase tracking-[0.3em] font-bold font-cormorant text-sm sm:text-[16px]">
+                    Explore Destination
+                  </span>
+                  <div className="w-24 h-px bg-(--yellow)/20 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-(--yellow) -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
                   </div>
-
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                    <h2 className="dest-title opacity-0 text-white text-5xl sm:text-6xl lg:text-9xl font-trajan font-medium italic tracking-wider">
-                      {dest.name}
-                    </h2>
-                    <p className="dest-desc opacity-0 text-white font-ovo text-[16px] md:text-[18px] opacity-80 mt-6 max-w-xs leading-relaxed">
-                      {dest.description}
-                    </p>
-                  </div>
-                </div>
+                </button>
               </div>
             </div>
-          </a>
-        ))}
-      </motion.div>
+          </div>
 
+          {/* NAVIGATION */}
+          <div className="absolute bottom-12 left-10 sm:right-12 z-40 flex items-center gap-8">
+            <div className="flex flex-col items-start text-white">
+              <span className="text-4xl font-light">
+                0
+                {destinacije.findIndex((d) => d.id === currentDestination.id) +
+                  1}
+              </span>
+              <div className="w-12 h-px bg-white/30 mt-1 relative">
+                <div
+                  className="absolute top-0 left-0 h-full bg-white transition-all duration-500"
+                  style={{
+                    width: `${((destinacije.findIndex((d) => d.id === currentDestination.id) + 1) / destinacije.length) * 100}%`,
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          {/* DESKTOP BUTTONS */}
+          <button
+            onClick={handlePrev}
+            disabled={isChanging}
+            className="w-16 h-16 bg-(--green) text-(--shore) rounded-full hidden sm:flex items-center justify-center absolute top-1/2 left-10"
+          >
+            <ArrowLeft />
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={isChanging}
+            className="w-16 h-16 bg-(--green) text-(--shore) rounded-full hidden sm:flex items-center justify-center absolute top-1/2 right-10"
+          >
+            <ArrowRight />
+          </button>
 
-    </section>
+          {/* MOBILE BUTTONS */}
+          <div className="absolute right-10 bottom-9 flex gap-2">
+            <button
+              onClick={handlePrev}
+              disabled={isChanging}
+              className="w-10 h-10 border border-(--shore) text-(--shore) rounded-full flex sm:hidden items-center justify-center "
+            >
+              ←
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={isChanging}
+              className="w-10 h-10 border border-(--shore) text-(--shore) rounded-full flex sm:hidden items-center justify-center "
+            >
+              →
+            </button>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

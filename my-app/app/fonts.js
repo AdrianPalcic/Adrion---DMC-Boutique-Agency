@@ -57,20 +57,3 @@ export const pinyon = localFont({
   ],
   variable: "--font-pinyon",
 });
-
-
-export const trajan = localFont({
-  src: [
-    {
-      path:"../public/fonts/TrajanPro-Regular.ttf",
-      weight: "400",
-      style:"normal"
-    },
-    {
-      path:"../public/fonts/TrajanPro-Bold.otf",
-      weight: "800",
-      style:"normal"
-    },
-  ],
-  variable: "--font-trajan"
-})
