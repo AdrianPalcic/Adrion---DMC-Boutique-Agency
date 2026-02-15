@@ -26,7 +26,7 @@ const Navbar = () => {
   ];
   const otherLinks = ["Our Partners", "Journal", "Contact"];
 
-  // Inicijalizacija Timeline-a
+  // Animacije
   useEffect(() => {
     if (
       !menuRef.current ||
@@ -127,11 +127,11 @@ const Navbar = () => {
             alt="Logo"
             className="w-[50px] sm:w-[60px] object-cover"
           />
-          <div className="flex flex-col gap-0 transition-opacity duration-500 font-cormorant text-center uppercase tracking-[0.2em] mt-1 text-white">
-            <span className="text-[10px] sm:text-[12px] md:text-[18px]">
+          <div className="flex flex-col gap-0 transition-opacity duration-500 font-trajan text-center uppercase tracking-[0.2em] mt-1 text-white">
+            <span className="text-[10px] sm:text-[12px] md:text-[15px]">
               Adrion Custom
             </span>
-            <span className="text-[8px] sm:text-[12px] md:text-[15px]">
+            <span className="text-[8px] sm:text-[10px] md:text-[12px]">
               Travel Agency
             </span>
           </div>
@@ -170,12 +170,12 @@ const Navbar = () => {
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6 z-20">
             <ul
               ref={desktopDestinationsRef}
-              className="flex flex-col font-ovo gap-6 text-4xl lg:text-5xl text-(--shore)"
+              className="flex flex-col font-trajan gap-6 text-4xl lg:text-5xl text-(--shore)"
             >
               {destinations.map((tour) => (
                 <li
                   key={tour}
-                  className="relative group cursor-pointer overflow-hidden w-fit"
+                  className="relative group cursor-pointer overflow-hidden w-fit "
                 >
                   {tour}
                   <span className="absolute bottom-0 left-0 w-full h-[1px] bg-(--shore) transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></span>
@@ -192,7 +192,7 @@ const Navbar = () => {
               {/* Ova lista sada sadrži i destinacije na mobilnim uređajima */}
               <ul
                 ref={linksRef}
-                className="flex flex-col gap-4 uppercase text-[18px] text-(--deep-blue) font-bold"
+                className="flex flex-col gap-4 uppercase text-[18px] text-(--deep-blue) font-bold font-trajan"
               >
                 {/* Destinacije vidljive samo na mobitelu */}
                 {destinations.map((tour) => (
@@ -221,7 +221,7 @@ const Navbar = () => {
                 ref={contactlinksRef}
                 className="mt-6 text-[14px] flex flex-col gap-1"
               >
-                <span>Email: info@adriontravel.com</span>
+                <span>Email: info@adriondmc.com</span>
                 <span>Phone: +385 99 512 1707</span>
                 <span>Address: Zagreb, Croatia</span>
               </div>
@@ -233,6 +233,7 @@ const Navbar = () => {
                     className="cursor-pointer hover:text-gray-400 transition-colors"
                   >
                     {item}
+
                   </li>
                 ))}
               </ul>

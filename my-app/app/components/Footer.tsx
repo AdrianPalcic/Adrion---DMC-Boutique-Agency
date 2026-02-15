@@ -31,10 +31,10 @@ const Footer = () => {
               className="w-[80px] h-full object-cover"
             />
           </div>
-          <div className="font-cormorant uppercase text-black/60 text-xl sm:text-3xl">
+          <div className="font-trajan uppercase text-black/60 text-lg sm:text-xl">
             Adrion Custom
           </div>
-          <div className="font-cormorant text-black/60 text-lg">
+          <div className="font-trajan text-black/60 text-sm">
             Travel Agency
           </div>
         </div>

@@ -1,84 +1,56 @@
 "use client";
 
 import React from "react";
+import { BtnGreenCenter } from "./utils/Btn"; 
 
-const ContactForm = () => {
+const GeneralCTA = () => {
   return (
     <section
-      id="contact"
-      className="w-full py-24 bg-(--green) px-6 md:px-12 border-t border-white/5"
+      className="w-full py-32 bg-(--green) px-6 md:px-12 border-t border-white/5 overflow-hidden"
     >
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
-        {/* Lijeva strana: Tekstualni poziv */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
+        
+        {/* Lijeva strana: Glavni tekst */}
         <div className="flex flex-col justify-center">
-          <p className="text-(--yellow) text-xs uppercase tracking-[0.5em] mb-6">
-            Contact Us
+          <p className="text-(--yellow) text-xs uppercase tracking-[0.5em] mb-8">
+            Bespoke Journeys
           </p>
-          <h2 className="text-white text-6xl md:text-7xl font-cormorant mb-8 leading-tight">
-            Let’s craft your <br /> next story.
+          <h2 className="text-white text-5xl md:text-7xl font-cormorant mb-10 leading-[1.1]">
+            Didn’t find what <br /> you were looking for?
           </h2>
-          <p className="text-white/60 font-ovo text-lg leading-relaxed max-w-sm">
-            Whether you have a specific itinerary in mind or just a desire to
-            travel, our experts are here to help.
+        </div>
+
+        {/* Desna strana: Sub-text i Button */}
+        <div className="flex flex-col justify-center items-start border-l border-white/10 md:pl-16">
+          <p className="text-white/70 font-ovo text-lg md:text-xl leading-relaxed mb-12 max-w-md">
+            Every traveler is unique, and so is every itinerary. 
+            Tell us about your preferences, and we will curate a 
+            journey that reflects your personal story.
           </p>
+          
+          <div className="w-full md:w-auto">
+             {/* Ovdje može ići tvoj gumb ili obični stilizirani anchor */}
+             <a 
+               href="#contact" 
+               className="inline-block py-5 px-12 border border-(--yellow) text-(--yellow) text-xs uppercase tracking-[0.3em] font-bold hover:bg-(--yellow) hover:text-(--green) transition-all duration-500"
+             >
+               Plan Your Private Trip
+             </a>
+          </div>
 
-          {/* <div className="mt-12 space-y-4">
-            <p className="text-white/40 text-xs uppercase tracking-widest">
-              Office Address
+          <div className="mt-16 pt-8 border-t border-white/5 w-full">
+            <p className="text-white/30 text-[10px] uppercase tracking-[0.2em]">
+              Direct Inquiry
             </p>
-            <p className="text-white font-cormorant text-xl italic">
-              Ulica Kralja Tomislava 1, 21000 Split, Croatia
+            <p className="text-white font-cormorant text-xl mt-2 italic">
+              hello@adrion-travel.com
             </p>
-          </div> */}
+          </div>
         </div>
 
-        {/* Desna strana: Forma */}
-        <div className="bg-white/5 p-8 md:p-12 backdrop-blur-sm border border-white/10">
-          <form className="flex flex-col gap-8">
-            <div className="group relative">
-              <label className="text-white/40 text-[10px] uppercase tracking-widest mb-2 block group-focus-within:text-(--yellow) transition-colors">
-                Full Name
-              </label>
-              <input
-                type="text"
-                className="w-full bg-transparent border-b border-white/20 py-2 text-white font-cormorant text-lg focus:outline-none focus:border-(--yellow) transition-all"
-                placeholder="John Doe"
-              />
-            </div>
-
-            <div className="group relative">
-              <label className="text-white/40 text-[10px] uppercase tracking-widest mb-2 block group-focus-within:text-(--yellow) transition-colors">
-                Email Address
-              </label>
-              <input
-                type="email"
-                className="w-full bg-transparent border-b border-white/20 py-2 text-white font-cormorant text-lg focus:outline-none focus:border-(--yellow) transition-all"
-                placeholder="john@example.com"
-              />
-            </div>
-
-            <div className="group relative">
-              <label className="text-white/40 text-[10px] uppercase tracking-widest mb-2 block group-focus-within:text-(--yellow) transition-colors">
-                Message
-              </label>
-              <textarea
-                rows={4}
-                className="w-full bg-transparent border-b border-white/20 py-2 text-white font-cormorant text-lg focus:outline-none focus:border-(--yellow) transition-all resize-none"
-                placeholder="Tell us about your dream journey..."
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="mt-4 py-4 w-full   text-(--yellow) text-[12px] uppercase tracking-[0.3em] font-bold  hover:text-white transition-all duration-500 cursor-pointer"
-            >
-              Send Inquiry
-            </button>
-          </form>
-        </div>
       </div>
     </section>
   );
 };
 
-export default ContactForm;
+export default GeneralCTA;

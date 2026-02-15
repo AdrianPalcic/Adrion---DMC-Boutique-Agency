@@ -75,3 +75,36 @@ export const multidays = [
     route: "Rovinj • Motovun • Grožnjan • Brijuni",
   },
 ];
+
+export const dayTrips = [
+  {
+    id: 1,
+    title: "Cetina Canyon Bike Adventures",
+    category: "Biking",
+    image: "/images/bike.webp",
+    duration: "4 Hours",
+    price: "From €120",
+    description:
+      "Pedal through ancient olive groves and hidden coastal trails of central Dalmatian islands.",
+  },
+  {
+    id: 2,
+    title: "Plitvice Waterways",
+    category: "Nature & Hiking",
+    image: "/images/plitvice-slapovi-next.webp",
+    duration: "8 Hours",
+    price: "From €95",
+    description:
+      "A private, curated tour through Croatia’s most iconic cascades and forest reserves.",
+  },
+  {
+    id: 3,
+    title: "Istrian Truffle Hunt & Medieval Hilltops",
+    category: "Heritage & Gourmet",
+    image: "/images/istra-back.webp",
+    duration: "6 Hours",
+    price: "From €150",
+    description:
+      "An exclusive deep-dive into Motovun forests with professional hunters, followed by a private tasting in a family-owned estate.",
+  },
+];
