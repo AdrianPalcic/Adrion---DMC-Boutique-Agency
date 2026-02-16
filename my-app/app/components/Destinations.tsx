@@ -8,11 +8,16 @@ import { useState, useRef } from "react";
 const contentVariants = {
   active: {
     opacity: 1, scale: 1, y: 0,
-    transition: { duration: 1, ease: cubicBezier(0.16, 1, 0.3, 1), staggerChildren: 0.1, delayChildren: 0.3 }
+    transition: { 
+      duration: 0.8, 
+      ease: cubicBezier(0.25, 0.1, 0.25, 1), 
+      staggerChildren: 0, 
+      delayChildren: 0 
+    }
   },
   inactive: {
-    opacity: 0, scale: 0.4, y: 40,
-    transition: { duration: 0.4 }
+    opacity: 0, scale: 0.1, y: 40,
+    transition: { duration: 1 }
   }
 };
 
