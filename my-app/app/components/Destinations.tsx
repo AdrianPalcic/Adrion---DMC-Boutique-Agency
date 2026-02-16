@@ -8,10 +8,10 @@ import { useState, useRef } from "react";
 const contentVariants = {
   active: {
     opacity: 1, scale: 1, y: 0,
-    transition: { duration: 0.8, ease: cubicBezier(0.16, 1, 0.3, 1), staggerChildren: 0.1, delayChildren: 0.2 }
+    transition: { duration: 1, ease: cubicBezier(0.16, 1, 0.3, 1), staggerChildren: 0.1, delayChildren: 0.3 }
   },
   inactive: {
-    opacity: 0, scale: 0.8, y: 40,
+    opacity: 0, scale: 0.4, y: 40,
     transition: { duration: 0.4 }
   }
 };
@@ -106,6 +106,7 @@ const Destinations = () => {
                       alt={dest.name}
                       className="object-cover w-[220px] sm:w-[300px] md:w-[400px] h-[320px] sm:h-[420px] md:h-[500px]"
                     />
+                    <div className="absolute inset-0 bg-black/40"></div>
                   </motion.div>
 
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-white">
