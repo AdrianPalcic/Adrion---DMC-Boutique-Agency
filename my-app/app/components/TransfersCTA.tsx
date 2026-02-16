@@ -9,7 +9,7 @@ const TransferSection = () => {
 With precise planning, real-time monitoring, and experienced chauffeurs, we ensure every movement runs smoothly, efficiently, and without compromise.`;
 
   return (
-    <section className="w-full h-screen lg:h-screen overflow-hidden relative">
+    <section className="w-full h-screen lg:h-screen overflow-hidden relative mb-20">
       <div className="flex flex-col lg:flex-row h-full w-full">
         
         <div className="absolute inset-0 lg:relative lg:flex-1 h-full w-full overflow-hidden">

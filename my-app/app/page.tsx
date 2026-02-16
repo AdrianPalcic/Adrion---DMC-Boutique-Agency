@@ -11,7 +11,6 @@ import TripCarouselComponent from "./components/TripCarouselComponent";
 import { dayTrips, multidays } from "@/constants";
 import ImageCTA from "./components/ImageCTA";
 import TransferCTA from "./components/TransfersCTA";
-import { SwipeCarousel } from "./components/SwipeCarousel";
 
 export default function Home() {
   return (
