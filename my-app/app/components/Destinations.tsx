@@ -66,7 +66,7 @@ const Destinations = () => {
         ref={containerRef}
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.6} // Smanjen elasticity da se ne bi previše rastezalo
+        dragElastic={0.4} // Smanjen elasticity da se ne bi previše rastezalo
         onDragEnd={onDragEnd}
         style={{ translateX: x, willChange: "transform" }}
         className="flex w-full h-full cursor-grab active:cursor-grabbing"
