@@ -71,7 +71,7 @@ const ImageCTA = () => {
             src="/images/cetina-back.webp"
             alt="Cetina Background"
             fill
-            className="object-cover h-[400px] opacity-60" 
+            className="object-cover h-[800px] opacity-60" 
             priority
           />
           <div className="absolute inset-0 bg-black/30" />

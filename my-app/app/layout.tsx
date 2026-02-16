@@ -7,6 +7,11 @@ import Footer from "./components/Footer";
 export const metadata: Metadata = {
   title: "Adrion Custom Travel Agency",
   description: "Currently under development",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    viewportFit: "cover", // JAKO BITNO za iPhone bar
+  },
 };
 
 export default function RootLayout({
