@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cormorantGaramond, ovo, pinyon } from "./fonts.js";
+import { cormorantGaramond, ovo, pinyon, trajan } from "./fonts.js";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning
-        className={`${cormorantGaramond.variable} ${ovo.variable} ${pinyon.variable} antialiased`}
+        className={`${cormorantGaramond.variable} ${ovo.variable} ${pinyon.variable} ${trajan.variable} antialiased`}
       >
         <Navbar />
 

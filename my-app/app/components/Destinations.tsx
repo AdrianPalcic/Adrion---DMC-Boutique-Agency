@@ -3,188 +3,128 @@
 import { destinacije } from "@/constants";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { motion, useMotionValue, animate, cubicBezier } from "framer-motion";
+import { useState, useRef } from "react";
 
-interface Destination {
-  id: number;
-  name: string;
-  description: string;
-  backgroundImage: string;
-  frontImage: string;
-}
+const contentVariants = {
+  active: {
+    opacity: 1, scale: 1, y: 0,
+    transition: { duration: 1, ease: cubicBezier(0.16, 1, 0.3, 1), staggerChildren: 0.1, delayChildren: 0.3 }
+  },
+  inactive: {
+    opacity: 0, scale: 0.4, y: 40,
+    transition: { duration: 0.4 }
+  }
+};
+
+const itemVariants = {
+  active: { opacity: 1, y: 0, scale: 1 },
+  inactive: { opacity: 0, y: 40, scale: 0.8 }
+};
 
 const Destinations = () => {
-  const [currentDestination, setCurrentDestination] = useState<Destination>(
-    destinacije[0],
-  );
+  const [index, setIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
 
-  // State za praćenje učitavanja
-  const [isBgLoaded, setIsBgLoaded] = useState(false);
-  const [isFrontLoaded, setIsFrontLoaded] = useState(false);
-  const [isChanging, setIsChanging] = useState(false);
+  const onDragEnd = (_e: any, info: any) => {
+    if (!containerRef.current) return;
 
-  // Kada se sve slike učitaju, gasimo "changing" state
-  useEffect(() => {
-    if (isBgLoaded && isFrontLoaded) {
-      setIsChanging(false);
+    const containerWidth = containerRef.current.clientWidth;
+    const { offset, velocity } = info;
+    const threshold = containerWidth * 0.2;
+
+    let newIndex = index;
+
+    // 1. Određujemo kamo idemo na temelju pomaka ILI brzine
+    if (offset.x < -threshold || velocity.x < -500) {
+      newIndex = Math.min(index + 1, destinacije.length - 1);
+    } else if (offset.x > threshold || velocity.x > 500) {
+      newIndex = Math.max(index - 1, 0);
     }
-  }, [isBgLoaded, isFrontLoaded]);
 
-  const triggerChange = (nextDest: Destination) => {
-    setIsChanging(true);
-    setIsBgLoaded(false);
-    setIsFrontLoaded(false);
-    setCurrentDestination(nextDest);
-  };
+    const target = -newIndex * containerWidth;
 
-  const handleNext = () => {
-    const currentIndex = destinacije.findIndex(
-      (d) => d.id === currentDestination.id,
-    );
-    const nextIndex = (currentIndex + 1) % destinacije.length;
-    triggerChange(destinacije[nextIndex]);
-  };
-
-  const handlePrev = () => {
-    const currentIndex = destinacije.findIndex(
-      (d) => d.id === currentDestination.id,
-    );
-    const prevIndex =
-      (currentIndex - 1 + destinacije.length) % destinacije.length;
-    triggerChange(destinacije[prevIndex]);
+    // 2. INERTIA ANIMACIJA
+    animate(x, target, {
+      type: "inertia",
+      velocity: velocity.x, // Hvata brzinu tvog zamaha
+      bounceStiffness: 0,    // OVO eliminira "feder" efekt
+      bounceDamping: 0,      // OVO eliminira "feder" efekt
+      power: 0.2,            // Koliko "daleko" zamah ide
+      timeConstant: 200,     // Kako brzo usporava prema cilju
+      restDelta: 0.001,
+      // modifyTarget pomaže da se "zaključa" na točan pixel
+      modifyTarget: () => target, 
+    });
+    
+    setIndex(newIndex);
   };
 
   return (
-    <>
-      <section className="w-full h-dvh relative overflow-hidden bg-black">
-        {/* LOADER UNUTAR SEKCIJE */}
-        <div
-          className={`absolute inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-md transition-opacity duration-700 ${isChanging ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-        >
-          <div className="flex flex-col items-center">
-            <div className="w-12 h-12 border-2 border-(--yellow)/20 border-t-(--yellow) rounded-full animate-spin mb-4" />
-            <p className="text-(--yellow) font-pinyon text-2xl animate-pulse">
-              Adrion
-            </p>
-          </div>
-        </div>
+    <section className="w-full overflow-hidden relative h-dvh bg-black">
+      <motion.div
+        ref={containerRef}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.4} // Smanjen elasticity da se ne bi previše rastezalo
+        onDragEnd={onDragEnd}
+        style={{ translateX: x, willChange: "transform" }}
+        className="flex w-full h-full cursor-grab active:cursor-grabbing"
+      >
+        {destinacije.map((dest, i) => (
+          <div key={dest.id} className="relative w-full h-full flex-shrink-0 overflow-hidden">
+            <Image
+              src={dest.backgroundImage}
+              alt="BG"
+              fill
+              className="object-cover pointer-events-none select-none opacity-60"
+              priority={i === 0}
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-black/40 z-10" />
 
-        {/* BACKGROUND IMAGE */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            key={currentDestination.backgroundImage}
-            src={currentDestination.backgroundImage}
-            sizes="100vw"
-            alt="Background"
-            fill
-            quality={75}
-            priority
-            onLoad={() => setIsBgLoaded(true)}
-            className={`object-cover object-center transition-all duration-1000 ${isChanging ? "scale-110 blur-sm" : "scale-100 blur-0"}`}
-          />
-        </div>
+            <motion.div 
+              className="relative z-20 w-full h-full flex flex-col items-center pointer-events-none select-none"
+              initial="inactive"
+              animate={i === index ? "active" : "inactive"}
+              variants={contentVariants}
+            >
+              {/* Sadržaj ostaje isti kao prije */}
+              <div className="mt-12 px-4 text-center">
+                <motion.h1 variants={itemVariants} className="font-pinyon text-3xl lg:text-5xl text-white opacity-80">
+                  Where our journeys take place
+                </motion.h1>
+              </div>
 
-        <div className="absolute inset-0 bg-black/50 z-10"></div>
+              <div className="flex-1 flex items-center justify-center w-full">
+                <div className="relative">
+                  <motion.div variants={itemVariants} className="relative shadow-2xl">
+                    <Image
+                      src={dest.frontImage}
+                      width={400}
+                      height={500}
+                      alt={dest.name}
+                      className="object-cover w-[220px] sm:w-[300px] md:w-[400px] h-[320px] sm:h-[420px] md:h-[500px]"
+                    />
+                    <div className="absolute inset-0 bg-black/40"></div>
+                  </motion.div>
 
-        {/* CONTENT */}
-        <div
-          id="content"
-          className="z-20 w-full h-full relative flex flex-col items-center"
-        >
-          <div className="my-6 mx-1">
-            <h1 className="font-cormorant text-3xl lg:text-5xl text-white text-center">
-              Where our journeys take place
-            </h1>
-          </div>
-
-          <div className="relative flex flex-col items-center justify-center flex-1 w-full">
-            <div className="relative group shadow-2xl">
-              <Image
-                key={currentDestination.frontImage}
-                src={currentDestination.frontImage}
-                width={400}
-                height={500}
-                alt={currentDestination.name}
-                onLoad={() => setIsFrontLoaded(true)}
-                className={`object-cover w-[300px] h-[400px] sm:w-[400px] sm:h-[500px] transition-all duration-700 ${isChanging ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
-              />
-
-              <div
-                className={`absolute inset-0 flex flex-col items-center justify-center   group ${isFrontLoaded ? "bg-black/40" : ""}`}
-              >
-                <h2 className="text-white text-center text-6xl lg:text-9xl font-cormorant font-medium italic tracking-wider drop-shadow-lg">
-                  {currentDestination.name}
-                </h2>
-                <p className="text-white font-ovo text-[18px] text-center opacity-80 mt-6 max-w-xs px-4">
-                  {currentDestination.description}
-                </p>
-
-                <button className="group flex flex-col items-center gap-2 cursor-pointer mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                  <span className="text-(--yellow) uppercase tracking-[0.3em] font-bold font-cormorant text-sm sm:text-[16px]">
-                    Explore Destination
-                  </span>
-                  <div className="w-24 h-px bg-(--yellow)/20 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-(--yellow) -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-white">
+                    <motion.h2 variants={itemVariants} className="text-5xl md:text-8xl font-trajan italic drop-shadow-lg">
+                      {dest.name}
+                    </motion.h2>
+                    <motion.p variants={itemVariants} className="font-ovo mt-6 max-w-xs opacity-90">
+                      {dest.description}
+                    </motion.p>
                   </div>
-                </button>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </div>
-
-          {/* NAVIGATION */}
-          <div className="absolute bottom-12 left-10 sm:right-12 z-40 flex items-center gap-8">
-            <div className="flex flex-col items-start text-white">
-              <span className="text-4xl font-light">
-                0
-                {destinacije.findIndex((d) => d.id === currentDestination.id) +
-                  1}
-              </span>
-              <div className="w-12 h-px bg-white/30 mt-1 relative">
-                <div
-                  className="absolute top-0 left-0 h-full bg-white transition-all duration-500"
-                  style={{
-                    width: `${((destinacije.findIndex((d) => d.id === currentDestination.id) + 1) / destinacije.length) * 100}%`,
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-          {/* DESKTOP BUTTONS */}
-          <button
-            onClick={handlePrev}
-            disabled={isChanging}
-            className="w-16 h-16 bg-(--green) text-(--shore) rounded-full hidden sm:flex items-center justify-center absolute top-1/2 left-10"
-          >
-            <ArrowLeft />
-          </button>
-          <button
-            onClick={handleNext}
-            disabled={isChanging}
-            className="w-16 h-16 bg-(--green) text-(--shore) rounded-full hidden sm:flex items-center justify-center absolute top-1/2 right-10"
-          >
-            <ArrowRight />
-          </button>
-
-          {/* MOBILE BUTTONS */}
-          <div className="absolute right-10 bottom-9 flex gap-2">
-            <button
-              onClick={handlePrev}
-              disabled={isChanging}
-              className="w-10 h-10 border border-(--shore) text-(--shore) rounded-full flex sm:hidden items-center justify-center "
-            >
-              ←
-            </button>
-            <button
-              onClick={handleNext}
-              disabled={isChanging}
-              className="w-10 h-10 border border-(--shore) text-(--shore) rounded-full flex sm:hidden items-center justify-center "
-            >
-              →
-            </button>
-          </div>
-        </div>
-      </section>
-    </>
+        ))}
+      </motion.div>
+    </section>
   );
 };
 
