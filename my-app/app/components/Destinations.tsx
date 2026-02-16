@@ -1,9 +1,8 @@
 "use client";
 
 import { destinacije } from "@/constants";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { motion, useMotionValue, animate, cubicBezier } from "framer-motion";
+import { motion, useMotionValue, animate, cubicBezier, useInView } from "framer-motion";
 import { useState, useRef } from "react";
 
 const contentVariants = {
@@ -25,6 +24,11 @@ const itemVariants = {
 const Destinations = () => {
   const [index, setIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { 
+  amount: 0.4,   // 40% mora biti vidljivo
+  once: false    // da se može reverseati
+});
   const x = useMotionValue(0);
 
   const onDragEnd = (_e: any, info: any) => {
@@ -62,7 +66,7 @@ const Destinations = () => {
   };
 
   return (
-    <section className="w-full overflow-hidden relative h-dvh bg-black">
+    <section ref={sectionRef} className="w-full overflow-hidden relative h-dvh bg-black">
       <motion.div
         ref={containerRef}
         drag="x"
@@ -87,7 +91,7 @@ const Destinations = () => {
             <motion.div 
               className="relative z-20 w-full h-full flex flex-col items-center pointer-events-none select-none"
               initial="inactive"
-              animate={i === index ? "active" : "inactive"}
+              animate={i === index && isInView ? "active" : "inactive"}
               variants={contentVariants}
             >
               {/* Sadržaj ostaje isti kao prije */}

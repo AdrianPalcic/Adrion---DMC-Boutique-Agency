@@ -4,24 +4,29 @@ import { useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import Btn from "./utils/Btn";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP ,ScrollTrigger);
 
 const Hero = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
+  useGSAP(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
-
-      gsap.fromTo(imageRef.current, 
-        { scale: 1.05 }, 
-        { scale: 1, duration: 4, ease: "power2.out" }
-      );
-
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        }
+        
+      });
 
       if (contentRef.current) {
-        gsap.fromTo(contentRef.current.children,
+        tl.fromTo(contentRef.current.children,
           { opacity: 0, y: 15 },
           { 
             opacity: 1, 
@@ -33,6 +38,14 @@ const Hero = () => {
           }
         );
       }
+     tl.fromTo(
+  imageRef.current, 
+  { scale: 1.05 }, 
+  { scale: 1, duration: 4, ease: "power2.out" },
+  "<" // ⬅️ OVO znači: kreni u isto vrijeme
+);
+
+
     });
 
     return () => ctx.revert();

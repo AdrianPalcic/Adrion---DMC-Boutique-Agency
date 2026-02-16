@@ -46,14 +46,14 @@ const TripCarouselComponent = ({trips, tag, title, description}: {trips: Trip[],
   return (
     <section ref={sectionRef} className="w-full text-white py-24  overflow-hidden">
       {/* Heading */}
-      <div className="mx-auto mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 px-4 sm:px-10">
+      <div className="mx-auto mb-4 sm:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 px-4 sm:px-10">
         <div ref={leftTextRef}>
 
-          <h2 className="text-black text-4xl md:text-5xl font-trajan font-bold leading-tight">
+          <h2 className="text-black text-4xl md:text-5xl font-trajan font-bold leading-tight text-center md:text-left">
             {title}
           </h2>
         </div>
-        <p ref={rightTextRef} className="text-black/60 font-ovo max-w-sm text-sm leading-relaxed">
+        <p ref={rightTextRef} className="text-black/60 font-ovo max-w-sm text-sm leading-relaxed hidden md:block">
           {description}
         </p>
       </div>

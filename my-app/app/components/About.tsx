@@ -5,8 +5,9 @@ import React, { useLayoutEffect, useRef } from "react";
 import { BtnGreen } from "./utils/Btn";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(useGSAP ,ScrollTrigger);
 
 const About = () => {
   const sectionRef = useRef(null);
@@ -16,44 +17,36 @@ const About = () => {
 
   const fullText = `At Adrion, we believe travel should have purpose, not volume. Every journey is meticulously designed, combining the rich landscapes of Croatia—from the Biokovo mountains, the Cetina canyon, and the Makarska Riviera, to its islands and cities—with thoughtfully chosen partners and activities. Our approach is selective and uncompromising: we focus on the highest quality experiences, blending adventure and comfort, local gastronomy and wine, cultural heritage, and the serenity of nature. Guests are guided through a journey that feels personal and effortless, while having the freedom to shape aspects of their itinerary. Adrion is not about luxury as a show. It is about luxury through curation, trust, and meaningful moments, where every choice—from activities to accommodations—reflects care, authenticity, and character.`;
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: imageContainerRef.current,
-          start: "top 85%", 
-          toggleActions: "play none none none",
-          markers: false, 
-        },
-      });
-
-      tl.fromTo(
-        revealOverlayRef.current,
-        { xPercent: 0 }, 
-        { 
-          xPercent: -100, 
-          ease: "power2.inOut", 
-          duration: 1.5 
-        }
-      );
-
-
-
+  useGSAP(
+  () => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: imageContainerRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
     });
 
-    // Ponekad Next.js slike na mobitelu kasne sa zauzimanjem prostora
-    // Ovo prisiljava ScrollTrigger da ponovno izračuna sve pozicije nakon pola sekunde
+    tl.fromTo(
+      revealOverlayRef.current,
+      { xPercent: 0 },
+      {
+        xPercent: -100,
+        ease: "power2.inOut",
+        duration: 1.5,
+      }
+    );
+
     const timeout = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 500);
 
     return () => {
-      ctx.revert();
       clearTimeout(timeout);
     };
-  }, []);
-
+  },
+  { scope: imageContainerRef }
+);
   return (
     <section 
       ref={sectionRef} 
