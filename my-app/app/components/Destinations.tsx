@@ -2,147 +2,126 @@
 
 import { destinacije } from "@/constants";
 import Image from "next/image";
-import { motion, useMotionValue, useTransform } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import { useInView } from "framer-motion";
-import { gsap } from "gsap";
+import { motion, useMotionValue, animate, cubicBezier } from "framer-motion";
+import { useState, useRef } from "react";
+
+const contentVariants = {
+  active: {
+    opacity: 1, scale: 1, y: 0,
+    transition: { duration: 0.8, ease: cubicBezier(0.16, 1, 0.3, 1), staggerChildren: 0.1, delayChildren: 0.2 }
+  },
+  inactive: {
+    opacity: 0, scale: 0.8, y: 40,
+    transition: { duration: 0.4 }
+  }
+};
+
+const itemVariants = {
+  active: { opacity: 1, y: 0, scale: 1 },
+  inactive: { opacity: 0, y: 40, scale: 0.8 }
+};
 
 const Destinations = () => {
   const [index, setIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: false, amount: 0.3 });
-  
-  // Koristimo dragX za vizualni feedback dok korisnik vuče
-  const dragX = useMotionValue(0);
+  const x = useMotionValue(0);
 
-  // GSAP animacija
- useEffect(() => {
-  if (!isInView) {
-    const slides = containerRef.current?.querySelectorAll(".slide-content");
-    slides?.forEach((slide) => {
-      const el = slide.querySelectorAll(".dest-title, .dest-image, .dest-desc");
-      gsap.set(el, { opacity: 0, scale: 0.2, y: 40 });
+  const onDragEnd = (_e: any, info: any) => {
+    if (!containerRef.current) return;
+
+    const containerWidth = containerRef.current.clientWidth;
+    const { offset, velocity } = info;
+    const threshold = containerWidth * 0.2;
+
+    let newIndex = index;
+
+    // 1. Određujemo kamo idemo na temelju pomaka ILI brzine
+    if (offset.x < -threshold || velocity.x < -500) {
+      newIndex = Math.min(index + 1, destinacije.length - 1);
+    } else if (offset.x > threshold || velocity.x > 500) {
+      newIndex = Math.max(index - 1, 0);
+    }
+
+    const target = -newIndex * containerWidth;
+
+    // 2. INERTIA ANIMACIJA
+    animate(x, target, {
+      type: "inertia",
+      velocity: velocity.x, // Hvata brzinu tvog zamaha
+      bounceStiffness: 0,    // OVO eliminira "feder" efekt
+      bounceDamping: 0,      // OVO eliminira "feder" efekt
+      power: 0.2,            // Koliko "daleko" zamah ide
+      timeConstant: 200,     // Kako brzo usporava prema cilju
+      restDelta: 0.001,
+      // modifyTarget pomaže da se "zaključa" na točan pixel
+      modifyTarget: () => target, 
     });
-    return;
-  }
-
-  const slides = containerRef.current?.querySelectorAll(".slide-content");
-  if (!slides) return;
-
-  slides.forEach((slide, i) => {
-    const title = slide.querySelector(".dest-title");
-    const image = slide.querySelector(".dest-image");
-    const description = slide.querySelector(".dest-desc");
-
-    if (i === index) {
-      const tl = gsap.timeline({ delay: 0.2 });
-      tl.to(image, { opacity: 1, scale: 1, duration: 1.2, ease: "expo.out" })
-        .to(title, { opacity: 1, scale: 1, y: 0, duration: 1, ease: "expo.out" }, "-=0.9")
-        .to(description, { opacity: 1, y: 0, scale: 1, duration: 1, ease: "expo.out" }, "-=0.8");
-    } else {
-      gsap.set([title, image, description], { 
-        opacity: 0, 
-        scale: 0.2, 
-        delay:0.3,
-        y: 40,
-        overwrite: true 
-      });
-    }
-  });
-}, [index, isInView]); // Dodali smo isInView ovdje
-
-  const onDragEnd = (e: any, info: any) => {
-    const threshold = 30; 
-    const velocity = info.velocity.x;
-    const offset = info.offset.x;
-
-
-    if (offset < -threshold || velocity < -500) {
-      if (index < destinacije.length - 1) {
-        setIndex(index + 1);
-      }
-    } else if (offset > threshold || velocity > 500) {
-      if (index > 0) {
-        setIndex(index - 1);
-      }
-    }
     
-    dragX.set(0);
+    setIndex(newIndex);
   };
 
   return (
-    <section className="w-full h-[dvh] bg-black overflow-hidden relative h-dvh touch-none">
+    <section className="w-full overflow-hidden relative h-dvh bg-black">
       <motion.div
         ref={containerRef}
         drag="x"
-        // Constraints sprječavaju da se cijeli div odvuče, ali dragElastic dopušta "peek" efekt
         dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.1} 
+        dragElastic={0.6} // Smanjen elasticity da se ne bi previše rastezalo
         onDragEnd={onDragEnd}
-        animate={{
-          // Postotni pomak temeljen na indexu je najsigurnija metoda protiv skippinga
-          translateX: `-${index * 100}%`,
-        }}
-        transition={{
-          type: "spring",
-          damping: 30,
-          stiffness: 180,
-          mass: 1
-        }}
-        className="flex h-full w-full cursor-grab active:cursor-grabbing"
+        style={{ translateX: x, willChange: "transform" }}
+        className="flex w-full h-full cursor-grab active:cursor-grabbing"
       >
-        {destinacije.map((dest) => (
-          <a
-            key={dest.id}
-            className="relative w-full h-full flex-shrink-0 overflow-hidden"
-          >
-            {/* BACKGROUND */}
+        {destinacije.map((dest, i) => (
+          <div key={dest.id} className="relative w-full h-full flex-shrink-0 overflow-hidden">
             <Image
               src={dest.backgroundImage}
               alt="BG"
               fill
-              priority
-              className="object-cover pointer-events-none select-none"
+              className="object-cover pointer-events-none select-none opacity-60"
+              priority={i === 0}
+              sizes="100vw"
             />
-            <div className="absolute inset-0 bg-black/60 z-10" />
+            <div className="absolute inset-0 bg-black/40 z-10" />
 
-            {/* CONTENT */}
-            <div className="slide-content relative z-20 w-full h-full flex flex-col items-center pointer-events-none select-none">
-              <div className="mt-12 px-4">
-                <h1 className="font-pinyon tracking-widest text-3xl lg:text-5xl text-white text-center">
+            <motion.div 
+              className="relative z-20 w-full h-full flex flex-col items-center pointer-events-none select-none"
+              initial="inactive"
+              animate={i === index ? "active" : "inactive"}
+              variants={contentVariants}
+            >
+              {/* Sadržaj ostaje isti kao prije */}
+              <div className="mt-12 px-4 text-center">
+                <motion.h1 variants={itemVariants} className="font-pinyon text-3xl lg:text-5xl text-white opacity-80">
                   Where our journeys take place
-                </h1>
+                </motion.h1>
               </div>
 
-              <div className="flex-1 flex items-start justify-center w-full">
+              <div className="flex-1 flex items-center justify-center w-full">
                 <div className="relative">
-                  <div className="dest-image opacity-0">
+                  <motion.div variants={itemVariants} className="relative shadow-2xl">
                     <Image
                       src={dest.frontImage}
                       width={400}
                       height={500}
                       alt={dest.name}
-                      className="object-cover w-[280px] h-[380px] sm:w-[300px] sm:h-[350px] md:w-[400px] md:h-[500px]"
+                      className="object-cover w-[220px] sm:w-[300px] md:w-[400px] h-[320px] sm:h-[420px] md:h-[500px]"
                     />
-                    <div className="absolute inset-0 bg-black/20"></div>
-                  </div>
+                  </motion.div>
 
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                    <h2 className="dest-title opacity-0 text-white text-5xl sm:text-6xl lg:text-9xl font-trajan font-medium italic tracking-wider">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-white">
+                    <motion.h2 variants={itemVariants} className="text-5xl md:text-8xl font-trajan italic drop-shadow-lg">
                       {dest.name}
-                    </h2>
-                    <p className="dest-desc opacity-0 text-white font-ovo text-[16px] md:text-[18px] opacity-80 mt-6 max-w-xs leading-relaxed">
+                    </motion.h2>
+                    <motion.p variants={itemVariants} className="font-ovo mt-6 max-w-xs opacity-90">
                       {dest.description}
-                    </p>
+                    </motion.p>
                   </div>
                 </div>
               </div>
-            </div>
-          </a>
+            </motion.div>
+          </div>
         ))}
       </motion.div>
-
-
     </section>
   );
 };

@@ -1,123 +1,114 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, useMotionValue } from "framer-motion";
 import { destinacije } from "@/constants";
 import Image from "next/image";
+import { motion, useMotionValue, animate } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
-const DRAG_BUFFER = 50;
+const Destinations = () => {
+  const [index, setIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-const SPRING_OPTIONS = {
-  type: "spring" as const,
-  mass: 1,
-  stiffness: 150,
-  damping: 25,
-  restDelta: 0.001,
-};
+  // MotionValue za X (translateX)
+  const x = useMotionValue(0);
 
-export const SwipeCarousel = () => {
-  const [imgIndex, setImgIndex] = useState(0);
-  
-  // dragX koristimo ISKLJUČIVO za logiku u onDragEnd, NE za style
-  const dragX = useMotionValue(0);
+  // onDragEnd logika
+  const onDragEnd = (_e: any, info: any) => {
+    if (!containerRef.current) return;
 
-  const onDragEnd = () => {
-    const x = dragX.get();
+    const containerWidth = containerRef.current.clientWidth;
+    const offset = info.offset.x;
+    const velocity = info.velocity.x;
+    const threshold = containerWidth * 0.2;
 
-    if (x <= -DRAG_BUFFER && imgIndex < destinacije.length - 1) {
-      setImgIndex((pv) => pv + 1);
-    } else if (x >= DRAG_BUFFER && imgIndex > 0) {
-      setImgIndex((pv) => pv - 1);
+    let newIndex = index;
+
+    if (offset < -threshold || velocity < -500) {
+      newIndex = Math.min(index + 1, destinacije.length - 1);
+    } else if (offset > threshold || velocity > 500) {
+      newIndex = Math.max(index - 1, 0);
     }
+
+    if (newIndex !== index) setIndex(newIndex);
+
+    // Snap na novi index
+    const target = -newIndex * containerWidth;
+    animate(x, target, { type: "spring", stiffness: 200, damping: 25 });
   };
 
+  // Kad se index promijeni izvan draga (klik, arrow), animiramo x
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const containerWidth = containerRef.current.clientWidth;
+    const target = -index * containerWidth;
+    animate(x, target, { type: "spring", stiffness: 200, damping: 25 });
+  }, [index]);
+
   return (
-    <div className="relative h-screen overflow-hidden bg-neutral-950">
+    <section className="w-full overflow-hidden relative h-dvh">
       <motion.div
+        ref={containerRef}
         drag="x"
-        dragConstraints={{
-          left: 0,
-          right: 0,
-        }}
-        // KLJUČ: dragX se puni preko info.offset-a, ali ne utječe na style direktno
-        onDrag={(e, info) => dragX.set(info.offset.x)}
-        animate={{
-          translateX: `-${imgIndex * 100}%`,
-        }}
-        transition={SPRING_OPTIONS}
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.2}
         onDragEnd={onDragEnd}
-        // dragElastic dopušta da se slika malo miče dok vučeš (feedback)
-        // ali bez onog hard-kodiranog x-a koji uzrokuje jump
-        dragElastic={0.1} 
-        className="flex h-full cursor-grab items-center active:cursor-grabbing touch-none"
+        style={{ translateX: x }}
+        className="flex w-full h-full cursor-grab active:cursor-grabbing"
       >
-        <Images />
-      </motion.div>
-    </div>
-  );
-};
-
-const Images = () => {
-  return (
-    <>
-      {destinacije.map((dest, idx) => (
-        <div
-          key={dest.id || idx}
-          className="relative w-screen h-full flex-shrink-0 overflow-hidden"
-        >
-          {/* BACKGROUND */}
-          <Image
-            src={dest.backgroundImage}
-            alt="BG"
-            fill
-            priority={idx === 0}
-            className="object-cover pointer-events-none select-none"
-          />
-          <div className="absolute inset-0 bg-black/60 z-10" />
-
-          {/* CONTENT - Omotan u motion div za lagani ulazni efekt */}
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="slide-content relative z-20 w-full h-full flex flex-col items-center pointer-events-none select-none"
+        {destinacije.map((dest, i) => (
+          <div
+            key={dest.id}
+            className="relative w-full h-[80vh] md:h-full flex-shrink-0 overflow-hidden"
           >
-            {/* GORNJI NASLOV */}
-            <div className="mt-12 px-4">
-              <h1 className="font-pinyon tracking-widest text-3xl lg:text-5xl text-white text-center">
-                Where our journeys take place
-              </h1>
-            </div>
+            {/* BACKGROUND */}
+            <Image
+              src={dest.backgroundImage}
+              alt="BG"
+              fill
+              className="object-cover pointer-events-none select-none"
+              priority={i === 0}
+              loading={i === 0 ? "eager" : "lazy"}
+            />
+            <div className="absolute inset-0 bg-black/60 z-10" />
 
-            {/* SREDIŠNJI DIO (Slike i glavni tekst) */}
-            <div className="flex-1 flex items-center justify-center w-full">
-              <div className="relative">
-                {/* FRONT IMAGE (Mala slika) */}
-                <div className="dest-image relative">
-                  <Image
-                    src={dest.frontImage}
-                    width={400}
-                    height={500}
-                    alt={dest.name}
-                    className="object-cover w-[280px] h-[380px] sm:w-[400px] sm:h-[500px]"
-                  />
-                  <div className="absolute inset-0 bg-black/20"></div>
-                </div>
+            {/* CONTENT */}
+            <div className="relative z-20 w-full h-full flex flex-col items-center justify-center pointer-events-none select-none">
+              <div className="px-4">
+                <h1 className="font-pinyon tracking-widest text-3xl lg:text-5xl text-white text-center">
+                  Where our journeys take place
+                </h1>
+              </div>
 
-                {/* TEKST PREKO MALE SLIKE */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                  <h2 className="text-white text-4xl lg:text-7xl font-trajan font-medium italic tracking-wider">
-                    {dest.name}
-                  </h2>
-                  <p className="text-white font-ovo text-[16px] md:text-[18px] opacity-80 mt-6 max-w-xs leading-relaxed">
-                    {dest.description}
-                  </p>
+              <div className="flex-1 flex items-start justify-center w-full">
+                <div className="relative">
+                  <div className="opacity-100">
+                    <Image
+                      src={dest.frontImage}
+                      width={400}
+                      height={500}
+                      alt={dest.name}
+                      className="object-cover w-[220px] sm:w-[300px] md:w-[400px] h-[300px] sm:h-[350px] md:h-[500px]"
+                      loading={i === 0 ? "eager" : "lazy"}
+                    />
+                    <div className="absolute inset-0 bg-black/20"></div>
+                  </div>
+
+                  <div className="absolute inset-0 top-1/2 flex flex-col items-center justify-center p-6 text-center">
+                    <h2 className="text-white text-5xl sm:text-6xl lg:text-9xl font-trajan font-medium italic tracking-wider">
+                      {dest.name}
+                    </h2>
+                    <p className="text-white font-ovo text-[16px] md:text-[18px] mt-6 max-w-xs leading-relaxed opacity-80">
+                      {dest.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </motion.div>
-        </div>
-      ))}
-    </>
+          </div>
+        ))}
+      </motion.div>
+    </section>
   );
 };
+
+export default Destinations;
