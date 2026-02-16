@@ -32,6 +32,9 @@
     box-shadow: 0 0 80px rgba(0, 0, 0, 0.05);
     overflow-x: hidden;
   }
+  main {
+    height: -webkit-fill-available;
+  }
 }
 .main-subtitle {
   letter-spacing: 0.01em;
